@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    ls
+    cd
     npm install -g @angular/cli@15.1.4
     cd logistica-ui
     npm install
