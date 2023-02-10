@@ -19,5 +19,5 @@ steps:
     npm install -g @angular/cli@15.1.4
     cd logistica-ui
     npm install
-    ng build --prod
+    ng build --configuration production
   displayName: 'npm install and build'
