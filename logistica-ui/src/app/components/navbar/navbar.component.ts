@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+
+  constructor(
+    public apiService: ApiService
+  ){}
+
+
+  submitReq(){
+    this.apiService.GetViajes().subscribe(res => {
+      console.log(res);
+    })
+  }
 
 }
