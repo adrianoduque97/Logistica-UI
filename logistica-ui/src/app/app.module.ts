@@ -22,6 +22,8 @@ import { environment } from '../enviroments/enviroment';
 import { PlannerComponent } from './components/planner/planner.component';
 import { AuthService } from './services/auth.service';
 
+import { GoogleChartsModule } from 'angular-google-charts';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { AuthService } from './services/auth.service';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    GoogleChartsModule
   ],
   providers: [ApiService, AuthService],
   bootstrap: [AppComponent]
