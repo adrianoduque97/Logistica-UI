@@ -10,6 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api-service.service';
 import { LoginComponent } from './components/login/login.component';
 import { RestoreComponent } from './components/restore/restore.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 
 // Firebase services + environment module
@@ -23,6 +27,7 @@ import { PlannerComponent } from './components/planner/planner.component';
 import { AuthService } from './services/auth.service';
 
 import { GoogleChartsModule } from 'angular-google-charts';
+import { NavbarService } from './services/navbar.service';
 
 
 @NgModule({
@@ -44,9 +49,13 @@ import { GoogleChartsModule } from 'angular-google-charts';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule
   ],
-  providers: [ApiService, AuthService],
+  providers: [ApiService, AuthService, NavbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

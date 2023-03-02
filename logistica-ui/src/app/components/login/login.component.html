@@ -1,34 +1,39 @@
-<div class="displayTable">
-    <div class="displayTableCell">
-      <div class="authBlock">
-        <h3>Sign In</h3>
-        <div class="formGroup">
-          <input type="text" class="formControl" placeholder="Username" #userName required>
-        </div>
-        <div class="formGroup">
-          <input type="password" class="formControl" placeholder="Password" #userPassword required>
-        </div>
-        <!-- Calling SignIn Api from AuthService -->
-        <div class="formGroup">
-          <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
-        </div>
-        <div class="formGroup">
-          <span class="or"><span class="orInner">Or</span></span>
-        </div>
-        <!-- Calling GoogleAuth Api from AuthService -->
-        <div class="formGroup">
-          <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
-            <i class="fab fa-google-plus-g"></i>
-            Log in with Google
-          </button>
-        </div>
-        <div class="forgotPassword">
-          <span routerLink="/forgot-password">Forgot Password?</span>
-        </div>
+<div>
+  <div class="centered main-card">
+    <div class="ima-log">
+      <div style="width: 20%;">
+          <img style="width:100%;" src="../../../assets/images/Logo_silog.png">
       </div>
-      <div class="redirectToLogin">
-        <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
-      </div>
-    </div>
   </div>
-  
+      <div class="normal-side center-flex" style="flex-direction:column;">
+        <div class="title">
+          Operaciones
+        </div>
+        <div class="info-form">
+          <form class="example-form"  [formGroup]="signupForm" style="overflow: hidden;">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Usuario</mat-label>
+                <input formControlName="user" matInput placeholder="doctor@test.com" >
+              </mat-form-field>
+            
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input formControlName="password" type="password" matInput placeholder="********">
+              </mat-form-field>
+              <button class="example-full-width " mat-raised-button color="primary" [disabled]="!signupForm.valid" (click)="onClick()">Ingresar</button>
+          </form>
+          
+          
+          <div style="display:flex; flex-direction: column; align-items:flex-start;">
+              <a class="registrarse" routerLink="/Register">Registrarse</a>
+              <a class="registrarse" routerLink="/Restore">Olvidé mi contraseña</a>
+          </div>
+      </div>
+      </div>    
+  <div class="blue-side center-flex">
+    <img style="width: 70%;"  src="../../../assets/images/camion.png">
+  </div>
+    
+  </div>
+
+</div>

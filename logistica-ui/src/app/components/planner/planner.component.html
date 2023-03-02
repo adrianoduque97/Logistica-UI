@@ -1,5 +1,9 @@
 <div>
-    <google-chart #chart [type]="changingChart.type"
-    [data]="changingChart.data"
-    [columns]="changingChart.columns" [options]="changingChart.options" ></google-chart>
+    <div class="centered main-card" style="align-items: center; justify-content: center;">
+        <div>
+            <google-chart #chart [type]="changingChart.type"
+            [data]="changingChart.data"
+            [columns]="changingChart.columns" [options]="changingChart.options" [width]="800" ></google-chart>
+        </div>
+    </div>
 </div>

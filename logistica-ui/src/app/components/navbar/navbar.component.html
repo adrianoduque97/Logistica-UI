@@ -1,5 +1,5 @@
-<div>
-    <mat-toolbar color="primary">
+<div *ngIf="navService.visible">
+    <mat-toolbar color="primary" class="back">
         <span><img src="../../../assets/images/Logo_silog.png" width="20%"></span> 
         <button (click)="submitReq()">TEST REQUEST</button>
     </mat-toolbar>

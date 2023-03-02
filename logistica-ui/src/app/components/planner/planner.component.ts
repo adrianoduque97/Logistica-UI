@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartType } from 'angular-google-charts';
+import { AuthService } from 'src/app/services/auth.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-planner',
   templateUrl: './planner.component.html',
   styleUrls: ['./planner.component.css']
 })
-export class PlannerComponent {
+export class PlannerComponent implements OnInit {
+
+  myWidht = 700;
+
+  constructor(public navService: NavbarService ){}
+
+  ngOnInit(): void {
+    this.navService.show();
+  }
 
   public changingChart = {
     title: 'Changing Chart',
@@ -17,9 +27,13 @@ export class PlannerComponent {
          new Date(2014, 2, 22), new Date(2014, 5, 20),10, 90, null],
          ['2014Summer', 'Summer 2014', 'summer',
          new Date(2014, 5, 21),new Date(2014, 8, 20), 10, 90, null],
+         ['2016Test', 'Test 2014', 'summer',
+         new Date(2015, 7, 21),new Date(2015, 10, 20), 10, 90, null],
+         ['2019Test', 'Test 2018', 'summer',
+         new Date(2018, 7, 21),new Date(2018, 11, 20), 10, 90, null]
     ],
     options:{
-      with: 1000
+      'with': 10000
       
     }
   };
