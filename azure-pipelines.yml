@@ -18,7 +18,7 @@ steps:
 - script: |
     npm install -g @angular/cli@15.1.4
     cd logistica-ui
-    npm install
+    npm install --force
     ng build --configuration production
   displayName: 'npm install and build'
   # workingDirectory: '$(Build.SourcesDirectory)'
