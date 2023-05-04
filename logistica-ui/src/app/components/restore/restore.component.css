@@ -1,0 +1,16 @@
+.example-full-width {
+    width: 100%;
+  }
+  .ima-log{
+    display:flex; 
+    position:absolute;
+  }
+
+
+/* MEDIA QUERIES */
+
+@media all and (max-width: 700px) {
+    .blue-side{
+        display: none;
+    }
+  }
