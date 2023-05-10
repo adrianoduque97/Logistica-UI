@@ -28,6 +28,7 @@ import { AuthService } from './services/auth.service';
 
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NavbarService } from './services/navbar.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NavbarService } from './services/navbar.service';
     NavbarComponent,
     LoginComponent,
     RestoreComponent,
-    PlannerComponent
+    PlannerComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
