@@ -25,12 +25,12 @@ export class NavbarComponent {
 
       this.silogtranService.GetTrailers(res.data.token,{placa:'CR0353'}).subscribe(x => console.log(x))
 
-      // this.silogtranService.GetVehiculos(res.data.token,'','SNB266').subscribe(x => {console.log(x);
-      // });
+      this.silogtranService.GetVehiculos(res.data.token,{placa:'SNB266'}).subscribe(x => {console.log(x);
+      });
 
-      // this.silogtranService.GetRutas(res.data.token, 'quito').subscribe(x => {console.log(x);});
+      this.silogtranService.GetRutas(res.data.token, {origen:'quito'}).subscribe(x => {console.log(x);});
 
-      // this.silogtranService.GetContenedores(res.data.token, '1').subscribe(x => {console.log(x);});
+      this.silogtranService.GetContenedores(res.data.token, {pagina:'1'}).subscribe(x => {console.log(x);});
       
     })
   }
