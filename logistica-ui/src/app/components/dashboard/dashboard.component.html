@@ -12,12 +12,28 @@
             </div>
         </div>
         <div class="center-container">
-            <div class="cabezales">
+            <mat-table #table [dataSource]="datasource" matSort #sort="matSort">
+                <ng-container matColumnDef="contenedor_numero">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.contenedor_numero}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="contenedor_pesomaximo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> peso </th>
+                    <td mat-cell *matCellDef="let element"> {{element.contenedor_pesomaximo}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            </mat-table>
+            <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons></mat-paginator>
+            <!-- <div class="cabezales">
                 CABEZALES
             </div>
             <div class="arrastres">
                 ARRASTRES
-            </div>
+            </div> -->
         </div>
         <div class="right-container">
             <div class="program">
