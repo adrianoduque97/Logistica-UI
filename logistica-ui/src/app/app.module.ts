@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTableExporterModule } from 'mat-table-exporter';
 
 
 // Firebase services + environment module
@@ -61,7 +62,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatTableExporterModule
   ],
   providers: [ApiService, AuthService, NavbarService],
   bootstrap: [AppComponent]
