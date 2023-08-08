@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 // Firebase services + environment module
@@ -39,7 +41,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LoginComponent,
     RestoreComponent,
     PlannerComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [ApiService, AuthService, NavbarService],
   bootstrap: [AppComponent]

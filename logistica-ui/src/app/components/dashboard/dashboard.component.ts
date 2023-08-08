@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
 import { Contenedor } from 'src/app/models/contenedor';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,17 +21,26 @@ import { MatButtonModule } from '@angular/material/button';
     ]),
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterViewInit {
+
+  @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild('sort') sort!: MatSort;
+
+  datasource = new MatTableDataSource<Contenedor>();
 
   contenedorData: Contenedor[] = [];
 
   constructor(public navService: NavbarService,
     public silogtranService: SilogtranService){}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.navService.show();
     this.silogtranService.GetToken().subscribe(res =>{
-      this.silogtranService.GetContenedores(res.data.token, {pagina:'1'}).subscribe(x => {this.contenedorData = x.data});
+      this.silogtranService.GetContenedores(res.data.token, {pagina:'1'}).subscribe(x => {
+        this.datasource.data = x.data;
+        this.datasource.paginator = this.paginator;
+        this.datasource.sort = this.sort;
+      });
     });
   }
 
