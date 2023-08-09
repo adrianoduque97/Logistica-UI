@@ -25,9 +25,13 @@ import { Mantenimiento } from 'src/app/models/mantenimiento';
 })
 export class DashboardComponent implements AfterViewInit {
 
-  @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild('paginatorTrailer') paginatorTrailer!: MatPaginator;
   @ViewChild('sort') sort!: MatSort;
   @ViewChild('filter') filter!: ElementRef;
+
+  @ViewChild('paginatorMant') paginatorMantenimientos!: MatPaginator;
+  @ViewChild('sortMant') sortMant!: MatSort;
+  @ViewChild('filterMant') filterMant!: ElementRef;
 
   trailerDataSource = new MatTableDataSource<Trailer>();
   matenimientoDataSource = new MatTableDataSource<Mantenimiento>();
@@ -43,7 +47,7 @@ export class DashboardComponent implements AfterViewInit {
         console.log(x.data);
            
         this.trailerDataSource.data = x.data;
-        this.trailerDataSource.paginator = this.paginator;
+        this.trailerDataSource.paginator = this.paginatorTrailer;
         this.trailerDataSource.sort = this.sort;
       });
 
@@ -51,8 +55,8 @@ export class DashboardComponent implements AfterViewInit {
         console.log(x.data);
         
         this.matenimientoDataSource.data = x.data;
-        this.matenimientoDataSource.paginator = this.paginator;
-        this.matenimientoDataSource.sort = this.sort;
+        this.matenimientoDataSource.paginator = this.paginatorMantenimientos;
+        this.matenimientoDataSource.sort = this.sortMant;
 
       });
     });

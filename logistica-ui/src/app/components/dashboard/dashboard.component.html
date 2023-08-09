@@ -10,7 +10,7 @@
                 <mat-card >
                     <mat-card-header class="header">MANTENIMIENTOS</mat-card-header>
                   
-                    <mat-table #table [dataSource]="matenimientoDataSource" matSort #sort="matSort" class="wrapper">
+                    <mat-table #table [dataSource]="matenimientoDataSource" matSort #sortMant="matSort" class="wrapper" matTableExporter #exporter1="matTableExporter">
                         <ng-container matColumnDef="placa">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
                             <td mat-cell *matCellDef="let element"> TEST009 </td>
@@ -37,7 +37,10 @@
                         <tr mat-row *matRowDef="let row; columns: mantenimientosColumns;"></tr>
                     </mat-table>
                 
-                    <mat-paginator #paginator [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator #paginatorMant [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button mat-button (click)="exporter1.exportTable('xlsx')"> Descargar Datos</button>
+                    </div>
                   </mat-card>
                 
             </div>
@@ -53,9 +56,10 @@
                     <input #filter class="search-bar" (keyup)="applyFilter($event)"  placeholder="Search...">
                 </div> -->
                 <mat-card>
-                    <mat-card-header class="header">TRAILERS</mat-card-header>
+                    <mat-card-header class="header">TRAILERS
+                    </mat-card-header>
                   
-                <mat-table #table [dataSource]="trailerDataSource" matSort #sort="matSort">
+                <mat-table #table [dataSource]="trailerDataSource" matSort #sort="matSort" matTableExporter #exporter="matTableExporter">
                     <ng-container matColumnDef="trailer_placa">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
                         <td mat-cell *matCellDef="let element"> {{element.trailer_placa}} </td>
@@ -91,7 +95,11 @@
                     <tr mat-row *matRowDef="let row; columns: trailersColumns;"></tr>
                 </mat-table>
             
-                <mat-paginator #paginator [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                <mat-paginator #paginatorTrailer [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button mat-button (click)="exporter.exportTable('xlsx')"> Descargar Datos</button>
+                </div>
+                
             </mat-card>
             </div>
 
