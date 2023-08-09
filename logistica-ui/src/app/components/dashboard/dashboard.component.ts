@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
@@ -8,6 +8,8 @@ import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Trailer } from 'src/app/models/trailer';
+import { Mantenimiento } from 'src/app/models/mantenimiento';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,10 +27,11 @@ export class DashboardComponent implements AfterViewInit {
 
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild('sort') sort!: MatSort;
+  @ViewChild('filter') filter!: ElementRef;
 
-  datasource = new MatTableDataSource<Contenedor>();
+  trailerDataSource = new MatTableDataSource<Trailer>();
+  matenimientoDataSource = new MatTableDataSource<Mantenimiento>();
 
-  contenedorData: Contenedor[] = [];
 
   constructor(public navService: NavbarService,
     public silogtranService: SilogtranService){}
@@ -36,16 +39,31 @@ export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.navService.show();
     this.silogtranService.GetToken().subscribe(res =>{
-      this.silogtranService.GetContenedores(res.data.token, {pagina:'1'}).subscribe(x => {
-        this.datasource.data = x.data;
-        this.datasource.paginator = this.paginator;
-        this.datasource.sort = this.sort;
+      this.silogtranService.GetTrailers(res.data.token, {pagina:'1'}).subscribe(x => {
+        console.log(x.data);
+           
+        this.trailerDataSource.data = x.data;
+        this.trailerDataSource.paginator = this.paginator;
+        this.trailerDataSource.sort = this.sort;
+      });
+
+      this.silogtranService.GetMantenimientod(res.data.token, {pagina:'1'}).subscribe( x=>{
+        console.log(x.data);
+        
+        this.matenimientoDataSource.data = x.data;
+        this.matenimientoDataSource.paginator = this.paginator;
+        this.matenimientoDataSource.sort = this.sort;
+
       });
     });
   }
 
-  columnsToDisplay = ['contenedor_numero', 'contenedor_pesomaximo'];
-  // columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  // expandedElement!: Contenedor | null;
+  trailersColumns = ['trailer_placa', 'tipo_equipo','tipo_trailer','trailer_modelo','trailer_pesovacio','estado'];
+  mantenimientosColumns = ['placa', 'estado','inicio','compromiso'];
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.trailerDataSource.filter = filterValue.trim();
+  }
 
 }

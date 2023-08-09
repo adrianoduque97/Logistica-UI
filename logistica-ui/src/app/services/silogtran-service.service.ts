@@ -87,7 +87,7 @@ export class SilogtranService {
   }
 
   GetMantenimientod(token: string, { pagina, equipo, codigo }: QueryParams): Observable<MantenimientoBase> {
-    var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getContenedores')
+    var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getMantenimientos')
       .append('pagina', pagina ?? '').append('numero', equipo ?? '').append('codigo', codigo ?? '');
     var headers = new HttpHeaders().set('Authorization', token);
 
