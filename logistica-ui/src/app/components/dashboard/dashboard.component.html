@@ -39,7 +39,7 @@
                 
                     <mat-paginator #paginatorMant [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
                     <div style="display: flex; justify-content: flex-end;">
-                        <button mat-button (click)="exporter1.exportTable('xlsx')"> Descargar Datos</button>
+                        <button class="down-button" mat-button (click)="exporter1.exportTable('xlsx')"> Descargar Datos</button>
                     </div>
                   </mat-card>
                 
@@ -51,18 +51,18 @@
             </div>
         </div>
         <div class="center-container">
-            <div>
+            <div class="arrastres">
                 <!-- <div class="col">
                     <input #filter class="search-bar" (keyup)="applyFilter($event)"  placeholder="Search...">
                 </div> -->
-                <mat-card>
-                    <mat-card-header class="header">TRAILERS
+                <!-- <mat-card> -->
+                    <mat-card-header class="header">ARRASTRES
                     </mat-card-header>
                   
-                <mat-table #table [dataSource]="trailerDataSource" matSort #sort="matSort" matTableExporter #exporter="matTableExporter">
+                <mat-table #tableArrastees #sortTrailer="matSort" [dataSource]="trailerDataSource" matSort matTableExporter #exporter="matTableExporter">
                     <ng-container matColumnDef="trailer_placa">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-                        <td mat-cell *matCellDef="let element"> {{element.trailer_placa}} </td>
+                        <td mat-cell *matCellDef="let element" (click)="OpenDialog(element)" > {{element.trailer_placa}} </td>
                     </ng-container>
     
                    
@@ -97,27 +97,60 @@
             
                 <mat-paginator #paginatorTrailer [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
                 <div style="display: flex; justify-content: flex-end;">
-                    <button mat-button (click)="exporter.exportTable('xlsx')"> Descargar Datos</button>
+                    <button class="down-button" mat-button (click)="exporter.exportTable('xlsx')"> Descargar Datos</button>
+                </div>
+                
+            <!-- </mat-card> -->
+            </div>
+
+            <div class="cabezales">
+                <mat-card>
+                    <mat-card-header class="header">CABEZALES
+                    </mat-card-header>
+                  
+                <mat-table #tableCabezales #sortVehiculos="matSort" [dataSource]="VehiculosoDataSource" matSort  matTableExporter #exporterVehiculos="matTableExporter">
+                    <ng-container matColumnDef="placa">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
+                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_placa}} </td>
+                    </ng-container>
+    
+                   
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Equipo </th>
+                        <td mat-cell *matCellDef="let element"> {{element.clase_vehiculo?.nombre}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="modelo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
+                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_modelo}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="peso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso </th>
+                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_pesovacio}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="capacidad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Capacidad </th>
+                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_capacidad}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ejes">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ejes </th>
+                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_ejes}} </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="vehiculosColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: vehiculosColumns;"></tr>
+                </mat-table>
+            
+                <mat-paginator #paginatorVehiculos [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="down-button" mat-button (click)="exporterVehiculos.exportTable('xlsx')"> Descargar Datos</button>
                 </div>
                 
             </mat-card>
             </div>
-
-            <div>
-                HOLA
-            </div>
-
-            
-            <!-- <div class="cabezales">
-                <mat-card>
-                    <mat-card-content>CABEZALES</mat-card-content>
-                  </mat-card>
-            </div>
-            <div class="arrastres">
-                <mat-card>
-                    <mat-card-content>ARRASTRES</mat-card-content>
-                  </mat-card>
-            </div> -->
         </div>
         <div class="right-container">
             <div class="program">
