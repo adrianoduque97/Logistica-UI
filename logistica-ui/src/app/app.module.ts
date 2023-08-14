@@ -38,6 +38,7 @@ import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ArrastreDialogComponent } from './components/dialogs/arrastre-dialog/arrastre-dialog.component';
 import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
+import { CabezalDialogComponent } from './components/dialogs/cabezal-dialog/cabezal-dialog.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento
     PlannerComponent,
     DashboardComponent,
     ArrastreDialogComponent,
-    MantenimientoDialogComponent
+    MantenimientoDialogComponent,
+    CabezalDialogComponent
   ],
   imports: [
     BrowserModule,

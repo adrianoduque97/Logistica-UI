@@ -77,14 +77,16 @@
                         <td mat-cell *matCellDef="let element"> {{element.trailer_modelo}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="trailer_pesovacio">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso </th>
-                        <td mat-cell *matCellDef="let element"> {{element.trailer_pesovacio}} </td>
-                    </ng-container>
-
                     <ng-container matColumnDef="estado">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
                         <td mat-cell *matCellDef="let element"> {{element.estado.nombre}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detalles">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalles </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <mat-icon style="cursor: pointer;" (click)="OpenArrastreDialog(element)">search</mat-icon>
+                        </td>
                     </ng-container>
     
                     <tr mat-header-row *matHeaderRowDef="trailersColumns"></tr>
@@ -107,7 +109,7 @@
                 <mat-table #tableCabezales #sortVehiculos="matSort" [dataSource]="VehiculosoDataSource" matSort  matTableExporter #exporterVehiculos="matTableExporter">
                     <ng-container matColumnDef="placa">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-                        <td mat-cell *matCellDef="let element" (click)="OpenArrastreDialog(element)"> {{element.vehiculo_placa}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_placa}} </td>
                     </ng-container>
     
                    
@@ -134,7 +136,7 @@
                     <ng-container matColumnDef="detalles">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalles </th>
                         <td mat-cell *matCellDef="let element">
-                            <mat-icon style="cursor: pointer;" (click)="OpenArrastreDialog(element)">search</mat-icon>
+                            <mat-icon style="cursor: pointer;" (click)="OpenCabezalDialog(element)">search</mat-icon>
                         </td>
                     </ng-container>
     

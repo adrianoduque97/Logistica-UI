@@ -70,7 +70,7 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
-  trailersColumns = ['trailer_placa', 'tipo_equipo','tipo_trailer','trailer_modelo','trailer_pesovacio','estado'];
+  trailersColumns = ['trailer_placa', 'tipo_equipo','tipo_trailer','trailer_modelo','estado', 'detalles'];
   mantenimientosColumns = ['placa', 'vigencia_revision','detalles'];
   vehiculosColumns = ['placa', 'tipo', 'modelo', 'capacidad', 'ejes', 'detalles']
 
@@ -79,10 +79,9 @@ export class DashboardComponent implements AfterViewInit {
     this.trailerDataSource.filter = filterValue.trim();
   }
 
-  OpenArrastreDialog(vehiculo: Vehiculo) {
+  OpenCabezalDialog(vehiculo: Vehiculo) {
     const dialogRef = this.dialog.open(ArrastreDialogComponent,{
       data:{
-        // vehi: vehiculo,
         Placa: vehiculo.vehiculo_placa,
         Peso_Bruto: vehiculo.vehiculo_pesobruto,
         Peso_Vacio: vehiculo.vehiculo_pesovacio,
@@ -90,6 +89,26 @@ export class DashboardComponent implements AfterViewInit {
         Largo: vehiculo.vehiculo_largo,
         Ancho: vehiculo.vehiculo_ancho,
         Seguro: vehiculo.vigencia_seguro_obligatorio
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(res =>{
+      console.log(res);
+      
+    });
+  }
+
+  OpenArrastreDialog(trailer: Trailer) {
+    const dialogRef = this.dialog.open(ArrastreDialogComponent,{
+      data:{
+        Placa: trailer.trailer_placa,
+        Peso_Vacio: trailer.trailer_pesovacio,
+        Peso_Maximo: trailer.trailer_pesomaximo,
+        Carroceria: trailer.carroceria?.nombre,
+        Matricula: trailer.trailer_matricula,
+        Chasis: trailer.trailer_chasis,
+        Tarjeta_Pesas: trailer.tarjeta_de_pesas_y_medidas,
+        Habilitacion: trailer.certificado_habilitacion
       }
     });
 
