@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatCardModule} from '@angular/material/card';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 
 
 // Firebase services + environment module
@@ -35,6 +36,8 @@ import { AuthService } from './services/auth.service';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ArrastreDialogComponent } from './components/dialogs/arrastre-dialog/arrastre-dialog.component';
+import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
 
 
 @NgModule({
@@ -45,6 +48,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     RestoreComponent,
     PlannerComponent,
     DashboardComponent,
+    ArrastreDialogComponent,
+    MantenimientoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatSortModule,
     MatCardModule,
     MatTableExporterModule,
-    MatDialogModule
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [ApiService, AuthService, NavbarService],
   bootstrap: [AppComponent]

@@ -13,25 +13,21 @@
                     <mat-table #table [dataSource]="matenimientoDataSource" matSort #sortMant="matSort" class="wrapper" matTableExporter #exporter1="matTableExporter">
                         <ng-container matColumnDef="placa">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-                            <td mat-cell *matCellDef="let element"> TEST009 </td>
+                            <td mat-cell *matCellDef="let element"> {{element.vehiculo_placa}} </td>
                         </ng-container>
         
                        
-                        <ng-container matColumnDef="estado">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
-                            <td mat-cell *matCellDef="let element"> {{element.estado?.nombre}} </td>
+                        <ng-container matColumnDef="vigencia_revision">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Vigencia Revisión Tecnomecánica </th>
+                            <td mat-cell *matCellDef="let element"> {{element.vigencia_revision_tecnomecanica_y_gases}} </td>
                         </ng-container>
     
-                        <ng-container matColumnDef="inicio">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Inicio </th>
-                            <td mat-cell *matCellDef="let element"> {{element.fecha_inicio}} </td>
-                        </ng-container>
-    
-                        <ng-container matColumnDef="compromiso">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Compromiso </th>
-                            <td mat-cell *matCellDef="let element"> {{element.fecha_compromiso}} </td>
-                        </ng-container>
-        
+                        <ng-container matColumnDef="detalles">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalles </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-icon style="cursor: pointer;" (click)="OpenMantenimientoDialog(element)">search</mat-icon>
+                            </td>
+                        </ng-container>        
         
                         <tr mat-header-row *matHeaderRowDef="mantenimientosColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: mantenimientosColumns;"></tr>
@@ -55,14 +51,14 @@
                 <!-- <div class="col">
                     <input #filter class="search-bar" (keyup)="applyFilter($event)"  placeholder="Search...">
                 </div> -->
-                <!-- <mat-card> -->
+                <mat-card>
                     <mat-card-header class="header">ARRASTRES
                     </mat-card-header>
                   
                 <mat-table #tableArrastees #sortTrailer="matSort" [dataSource]="trailerDataSource" matSort matTableExporter #exporter="matTableExporter">
                     <ng-container matColumnDef="trailer_placa">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-                        <td mat-cell *matCellDef="let element" (click)="OpenDialog(element)" > {{element.trailer_placa}} </td>
+                        <td mat-cell *matCellDef="let element" > {{element.trailer_placa}} </td>
                     </ng-container>
     
                    
@@ -100,18 +96,18 @@
                     <button class="down-button" mat-button (click)="exporter.exportTable('xlsx')"> Descargar Datos</button>
                 </div>
                 
-            <!-- </mat-card> -->
+            </mat-card>
             </div>
 
             <div class="cabezales">
                 <mat-card>
                     <mat-card-header class="header">CABEZALES
                     </mat-card-header>
-                  
+                  <mat-card-content>
                 <mat-table #tableCabezales #sortVehiculos="matSort" [dataSource]="VehiculosoDataSource" matSort  matTableExporter #exporterVehiculos="matTableExporter">
                     <ng-container matColumnDef="placa">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_placa}} </td>
+                        <td mat-cell *matCellDef="let element" (click)="OpenArrastreDialog(element)"> {{element.vehiculo_placa}} </td>
                     </ng-container>
     
                    
@@ -125,11 +121,6 @@
                         <td mat-cell *matCellDef="let element"> {{element.vehiculo_modelo}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="peso">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso </th>
-                        <td mat-cell *matCellDef="let element"> {{element.vehiculo_pesovacio}} </td>
-                    </ng-container>
-
                     <ng-container matColumnDef="capacidad">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Capacidad </th>
                         <td mat-cell *matCellDef="let element"> {{element.vehiculo_capacidad}} </td>
@@ -139,10 +130,18 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ejes </th>
                         <td mat-cell *matCellDef="let element"> {{element.vehiculo_ejes}} </td>
                     </ng-container>
+
+                    <ng-container matColumnDef="detalles">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalles </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-icon style="cursor: pointer;" (click)="OpenArrastreDialog(element)">search</mat-icon>
+                        </td>
+                    </ng-container>
     
                     <tr mat-header-row *matHeaderRowDef="vehiculosColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: vehiculosColumns;"></tr>
                 </mat-table>
+            </mat-card-content>
             
                 <mat-paginator #paginatorVehiculos [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
                 <div style="display: flex; justify-content: flex-end;">

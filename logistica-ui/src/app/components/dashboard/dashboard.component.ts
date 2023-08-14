@@ -1,18 +1,15 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavbarService } from 'src/app/services/navbar.service';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material/table';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
-import { Contenedor } from 'src/app/models/contenedor';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { NgFor, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Trailer } from 'src/app/models/trailer';
-import { Mantenimiento } from 'src/app/models/mantenimiento';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { MatDialog } from '@angular/material/dialog';
-import { DashboardDialogComponent } from './dashboard-dialog/dashboard-dialog.component';
+import { ArrastreDialogComponent } from '../dialogs/arrastre-dialog/arrastre-dialog.component';
+import { MantenimientoDialogComponent } from '../dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,7 +38,7 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild('filterVehiculos', {static: true}) filterVehiculos!: ElementRef;
 
   trailerDataSource = new MatTableDataSource<Trailer>();
-  matenimientoDataSource = new MatTableDataSource<Mantenimiento>();
+  matenimientoDataSource = new MatTableDataSource<Vehiculo>();
   VehiculosoDataSource = new MatTableDataSource<Vehiculo>();
 
 
@@ -60,38 +57,52 @@ export class DashboardComponent implements AfterViewInit {
         this.trailerDataSource.sort = this.sortTrailer;
       });
 
-      this.silogtranService.GetMantenimientos(res.data.token, {pagina:'1'}).subscribe( x=>{
-        console.log(x.data);
-        
-        this.matenimientoDataSource.data = x.data;
-        this.matenimientoDataSource.paginator = this.paginatorMantenimientos;
-        this.matenimientoDataSource.sort = this.sortMant;
-
-      });
-
       this.silogtranService.GetVehiculos(res.data.token,{pagina:'1'}).subscribe(x=>{
         console.log(x.data);
         
         this.VehiculosoDataSource.data = x.data;
         this.VehiculosoDataSource.paginator = this.paginatorVehiculos;
-        this.VehiculosoDataSource.sort = this.sortVehiculos;
+        this.VehiculosoDataSource.sort = this.sortVehiculos;            
+        this.matenimientoDataSource.data = x.data;
+        this.matenimientoDataSource.paginator = this.paginatorMantenimientos;
+        this.matenimientoDataSource.sort = this.sortMant;
       });
     });
   }
 
   trailersColumns = ['trailer_placa', 'tipo_equipo','tipo_trailer','trailer_modelo','trailer_pesovacio','estado'];
-  mantenimientosColumns = ['placa', 'estado','inicio','compromiso'];
-  vehiculosColumns = ['placa', 'tipo', 'modelo', 'peso', 'capacidad', 'ejes']
+  mantenimientosColumns = ['placa', 'vigencia_revision','detalles'];
+  vehiculosColumns = ['placa', 'tipo', 'modelo', 'capacidad', 'ejes', 'detalles']
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.trailerDataSource.filter = filterValue.trim();
   }
 
-  OpenDialog(vehiculo: Vehiculo) {
-    const dialogRef = this.dialog.open(DashboardDialogComponent,{
+  OpenArrastreDialog(vehiculo: Vehiculo) {
+    const dialogRef = this.dialog.open(ArrastreDialogComponent,{
       data:{
-        vehiculo
+        // vehi: vehiculo,
+        Placa: vehiculo.vehiculo_placa,
+        Peso_Bruto: vehiculo.vehiculo_pesobruto,
+        Peso_Vacio: vehiculo.vehiculo_pesovacio,
+        Alto: vehiculo.vehiculo_alto,
+        Largo: vehiculo.vehiculo_largo,
+        Ancho: vehiculo.vehiculo_ancho,
+        Seguro: vehiculo.vigencia_seguro_obligatorio
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(res =>{
+      console.log(res);
+      
+    });
+  }
+
+  OpenMantenimientoDialog(vehiculo: Vehiculo) {
+    const dialogRef = this.dialog.open(MantenimientoDialogComponent,{
+      data:{
+        placa: vehiculo.vehiculo_placa
       }
     });
 
