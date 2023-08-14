@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DetailsDialogComponent } from '../dialogs/details-dialog/details-dialog.component';
 import { MantenimientoDialogComponent } from '../dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
 import { SatcontrolService } from 'src/app/services/satcontrol.service';
-import { GPSDialogComponent } from '../dialogs/cabezal-dialog/gps-dialog.component';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-dashboard',
@@ -47,9 +47,11 @@ export class DashboardComponent implements AfterViewInit {
   constructor(public navService: NavbarService,
     public silogtranService: SilogtranService,
     public satControlService: SatcontrolService,
+    public spinner: NgxSpinnerService,
     private dialog: MatDialog){}
 
   ngAfterViewInit(): void {
+    this.spinner.show()
     this.navService.show();
     this.silogtranService.GetToken().subscribe(res =>{
       this.silogtranService.GetTrailers(res.data.token, {pagina:'1'}).subscribe(x => {
@@ -69,6 +71,7 @@ export class DashboardComponent implements AfterViewInit {
         this.matenimientoDataSource.data = x.data;
         this.matenimientoDataSource.paginator = this.paginatorMantenimientos;
         this.matenimientoDataSource.sort = this.sortMant;
+        this.spinner.hide();
       });
     });
   }
