@@ -36,7 +36,7 @@ import { AuthService } from './services/auth.service';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ArrastreDialogComponent } from './components/dialogs/arrastre-dialog/arrastre-dialog.component';
+import { DetailsDialogComponent } from './components/dialogs/details-dialog/details-dialog.component';
 import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
 import { CabezalDialogComponent } from './components/dialogs/cabezal-dialog/cabezal-dialog.component';
 
@@ -49,7 +49,7 @@ import { CabezalDialogComponent } from './components/dialogs/cabezal-dialog/cabe
     RestoreComponent,
     PlannerComponent,
     DashboardComponent,
-    ArrastreDialogComponent,
+    DetailsDialogComponent,
     MantenimientoDialogComponent,
     CabezalDialogComponent
   ],

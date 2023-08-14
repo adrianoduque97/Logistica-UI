@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArrastreDialogComponent } from './arrastre-dialog.component';
+import { DetailsDialogComponent } from './details-dialog.component';
 
 describe('ArrastreDialogComponent', () => {
-  let component: ArrastreDialogComponent;
-  let fixture: ComponentFixture<ArrastreDialogComponent>;
+  let component: DetailsDialogComponent;
+  let fixture: ComponentFixture<DetailsDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArrastreDialogComponent ]
+      declarations: [ DetailsDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ArrastreDialogComponent);
+    fixture = TestBed.createComponent(DetailsDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

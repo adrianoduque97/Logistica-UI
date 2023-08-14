@@ -6,13 +6,13 @@ import { SilogtranService } from 'src/app/services/silogtran-service.service';
 
 @Component({
   selector: 'app-arrastre-dialog',
-  templateUrl: './arrastre-dialog.component.html',
-  styleUrls: ['./arrastre-dialog.component.css']
+  templateUrl: './details-dialog.component.html',
+  styleUrls: ['./details-dialog.component.css']
 })
 
-export class ArrastreDialogComponent {
+export class DetailsDialogComponent {
 
-  constructor(public dialogRef: MatDialogRef<ArrastreDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<DetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, public satcontrolService: SatcontrolService){
     }
 

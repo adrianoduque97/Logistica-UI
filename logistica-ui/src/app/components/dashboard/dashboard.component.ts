@@ -8,7 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { Trailer } from 'src/app/models/trailer';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { MatDialog } from '@angular/material/dialog';
-import { ArrastreDialogComponent } from '../dialogs/arrastre-dialog/arrastre-dialog.component';
+import { DetailsDialogComponent } from '../dialogs/details-dialog/details-dialog.component';
 import { MantenimientoDialogComponent } from '../dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
 
 @Component({
@@ -80,7 +80,7 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   OpenCabezalDialog(vehiculo: Vehiculo) {
-    const dialogRef = this.dialog.open(ArrastreDialogComponent,{
+    const dialogRef = this.dialog.open(DetailsDialogComponent,{
       data:{
         Placa: vehiculo.vehiculo_placa,
         Peso_Bruto: vehiculo.vehiculo_pesobruto,
@@ -99,7 +99,7 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   OpenArrastreDialog(trailer: Trailer) {
-    const dialogRef = this.dialog.open(ArrastreDialogComponent,{
+    const dialogRef = this.dialog.open(DetailsDialogComponent,{
       data:{
         Placa: trailer.trailer_placa,
         Peso_Vacio: trailer.trailer_pesovacio,
