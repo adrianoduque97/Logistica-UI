@@ -38,7 +38,7 @@ import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DetailsDialogComponent } from './components/dialogs/details-dialog/details-dialog.component';
 import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
-import { CabezalDialogComponent } from './components/dialogs/cabezal-dialog/cabezal-dialog.component';
+import { GPSDialogComponent } from './components/dialogs/cabezal-dialog/gps-dialog.component';
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import { CabezalDialogComponent } from './components/dialogs/cabezal-dialog/cabe
     DashboardComponent,
     DetailsDialogComponent,
     MantenimientoDialogComponent,
-    CabezalDialogComponent
+    GPSDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -32,7 +32,7 @@ export class SatcontrolService {
     const options = { params: params}
 
     return this.http
-    .get<any>(this.baseurl+'/GetHistoryByPlate', options)
+    .get<any>(this.baseurl+'GetHistoryByPlate', options)
     .pipe(retry(1), catchError(this.errorHandle));
   }
 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CabezalDialogComponent } from './cabezal-dialog.component';
+import { GPSDialogComponent } from './gps-dialog.component';
 
 describe('CabezalDialogComponent', () => {
-  let component: CabezalDialogComponent;
-  let fixture: ComponentFixture<CabezalDialogComponent>;
+  let component: GPSDialogComponent;
+  let fixture: ComponentFixture<GPSDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CabezalDialogComponent ]
+      declarations: [ GPSDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CabezalDialogComponent);
+    fixture = TestBed.createComponent(GPSDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,6 +10,8 @@ import { Vehiculo } from 'src/app/models/vehiculo';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailsDialogComponent } from '../dialogs/details-dialog/details-dialog.component';
 import { MantenimientoDialogComponent } from '../dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
+import { SatcontrolService } from 'src/app/services/satcontrol.service';
+import { GPSDialogComponent } from '../dialogs/cabezal-dialog/gps-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,6 +46,7 @@ export class DashboardComponent implements AfterViewInit {
 
   constructor(public navService: NavbarService,
     public silogtranService: SilogtranService,
+    public satControlService: SatcontrolService,
     private dialog: MatDialog){}
 
   ngAfterViewInit(): void {
@@ -127,6 +130,22 @@ export class DashboardComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(res =>{
       console.log(res);
+      
+    });
+  }
+
+  OpenGPSDialog(vehiculo : Trailer){
+    this.satControlService.GetHistoryByPlate(vehiculo.trailer_placa).subscribe(res =>{
+      console.log(res);
+      const dialogRef = this.dialog.open(DetailsDialogComponent,{
+        data:{
+          Latitud: res?.latitude ?? 0,
+          Longitud: res?.longitude,
+          Odometro: res?.odometer,
+          Localizacion: res?.location,
+          Altutud: res?.altitud ?? 0
+        }
+      });
       
     });
   }
