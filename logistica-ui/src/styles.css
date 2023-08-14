@@ -60,3 +60,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     line-height: 1.1;
     padding-bottom: 40px;
   }
+
+  td{
+    text-align: center
+  }

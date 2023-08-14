@@ -23,6 +23,8 @@ export interface VehiculoBase {
     vigencia_matricula: string
     vehiculo_ejes: string
     vehiculo_modelo: string
+    vehiculo_codigo: string
+    vehiculo_placa: string
   }
   
   export interface ClaseVehiculo {

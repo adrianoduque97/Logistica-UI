@@ -6,8 +6,11 @@ export interface MantenimientoBase {
   }
   
   export interface Mantenimiento {
+    codigo: string
     estado: Estado
-    fecha_inicio: any
+    equipo: Equipo
+    conductor: Conductor
+    fecha_inicio: string
     fecha_compromiso: any
     observacion: any
   }
@@ -15,5 +18,15 @@ export interface MantenimientoBase {
   export interface Estado {
     codigo: string
     nombre: string
+  }
+
+  export interface Equipo {
+    codigo: string
+    nombre: string
+  }
+  
+  export interface Conductor {
+    codigo: string
+    nombrecompleto: string
   }
   

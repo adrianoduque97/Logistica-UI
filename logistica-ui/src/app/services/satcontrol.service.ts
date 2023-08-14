@@ -7,9 +7,8 @@ import { Observable, retry, catchError, throwError } from 'rxjs';
 })
 export class SatcontrolService {
   
-  baseurl = 'https://web1ws.shareservice.co/wsHistoryGetByPlate.asmx';
-  sLogin = 'Sistemassilogisticaecu'
-  sPassword = 'sistemassilogisticaecu2023'
+  baseurl = 'https://si-logistica-api.azurewebsites.net/SatControl/';
+
   constructor(private http: HttpClient) { }
 
   httpOptions = {
@@ -26,6 +25,15 @@ export class SatcontrolService {
     return this.http
       .get<any>(this.baseurl+'/GetMobileList', options)
       .pipe(retry(1), catchError(this.errorHandle));
+  }
+
+  GetHistoryByPlate(placa: string): Observable<any>{
+    var params = new HttpParams().set('Plate', placa);
+    const options = { params: params}
+
+    return this.http
+    .get<any>(this.baseurl+'GetHistoryByPlate', options)
+    .pipe(retry(1), catchError(this.errorHandle));
   }
 
 

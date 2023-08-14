@@ -19,6 +19,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatCardModule} from '@angular/material/card';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 
 
 // Firebase services + environment module
@@ -34,6 +36,9 @@ import { AuthService } from './services/auth.service';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DetailsDialogComponent } from './components/dialogs/details-dialog/details-dialog.component';
+import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
+import { GPSDialogComponent } from './components/dialogs/cabezal-dialog/gps-dialog.component';
 
 
 @NgModule({
@@ -44,6 +49,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     RestoreComponent,
     PlannerComponent,
     DashboardComponent,
+    DetailsDialogComponent,
+    MantenimientoDialogComponent,
+    GPSDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +73,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
-    MatTableExporterModule
+    MatTableExporterModule,
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [ApiService, AuthService, NavbarService],
   bootstrap: [AppComponent]
