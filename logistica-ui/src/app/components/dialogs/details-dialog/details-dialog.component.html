@@ -1,0 +1,13 @@
+<div>
+    <mat-card>
+        <mat-card-header>DETALLES</mat-card-header>
+        <mat-card-content>
+            <div *ngFor="let elem of data | keyvalue">
+                <div style="display: flex; align-items: baseline;justify-content: space-around;">
+                    <span>{{elem.key}}:</span>
+                    <span>{{elem.value}}</span>
+                </div>   
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

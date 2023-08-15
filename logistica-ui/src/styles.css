@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.main-card {
+    width: 90%;
+    height: 85%;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  }
+  
+  .centered {
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .center-flex{
+    display:flex; 
+    align-items:center;
+}
+.blue-side{
+    width: 50%;
+    height: 100%;
+    background-color: rgba(63, 81, 181, 0.5);
+    overflow: auto;
+    justify-content: center;
+  }
+  .normal-side{
+    width: 50%;
+    height: 100%;
+    overflow: auto;
+    justify-content: center;
+  }
+  .info-form{
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+
+  .example-form{
+    min-width: 250px;
+    max-width: 550px;
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+.title {
+    font-weight: 700;
+    font-family: "Inter-Bold", "Inter", sans-serif;
+    color: #333;
+    font-size: 46px;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    padding-bottom: 40px;
+  }
+
+  td{
+    text-align: center
+  }
