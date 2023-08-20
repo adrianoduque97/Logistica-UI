@@ -121,7 +121,7 @@
                     <tr mat-row *matRowDef="let row; columns: trailersColumns;"></tr>
                 </mat-table>
             
-                <mat-paginator #paginatorTrailer [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                <mat-paginator #paginatorTrailer [pageSizeOptions]="[7, 10,13]" showFirstLastButtons></mat-paginator>
                 <div style="display: flex; justify-content: flex-end;">
                     <button class="down-button" mat-button (click)="exporter.exportTable('xlsx')"> Descargar Datos</button>
                 </div>
@@ -173,7 +173,7 @@
                 </mat-table>
             </mat-card-content>
             
-                <mat-paginator #paginatorVehiculos [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                <mat-paginator #paginatorVehiculos [pageSizeOptions]="[7, 10,13]" showFirstLastButtons></mat-paginator>
                 <div style="display: flex; justify-content: flex-end;">
                     <button class="down-button" mat-button (click)="exporterVehiculos.exportTable('xlsx')"> Descargar Datos</button>
                 </div>

@@ -1,3 +1,46 @@
-.back{
+/* .back{
     background: #222e70;
+} */
+.navbar{
+    justify-content: space-between;
+    background-color:#222e70;
+    height: 45px;
 }
+
+
+.span-style{
+    margin-right: 5rem;
+    cursor: pointer;
+}
+.span-style:hover{
+    color: gray;
+}
+
+.nav-width{
+    width:60%;
+}
+
+.nav-responsive{
+    display: none;
+}
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+  /* MEDIA QUERIES */
+
+  @media all and (max-width: 700px) {
+    span{
+        display:none;
+    }
+    .nav-width{
+        width: 225%;
+    }
+    .example-container{
+        display: block;
+    }
+    .nav-responsive{
+        display: block;
+    }
+
+  }
