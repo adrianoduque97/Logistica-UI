@@ -1,5 +1,29 @@
 <div *ngIf="navService.visible">
-    <mat-toolbar color="primary" class="back">
-        <span><img src="../../../assets/images/Logo_silog.png" width="20%"></span> 
+    <mat-toolbar color="primary" class="navbar">
+        <div class="nav-responsive">
+            <button mat-icon-button [matMenuTriggerFor]="menuNav">
+                <mat-icon>menu</mat-icon>
+              </button>
+              <mat-menu #menuNav="matMenu">
+                <div mat-menu-item style="cursor: pointer;"  routerLink="/dashboard">Dashboard</div>
+                <div mat-menu-item style="cursor: pointer;"  routerLink="/programacion">Programación</div>
+              </mat-menu>
+        </div>
+        <div style="width: 15%;">
+            <img class="nav-width" src="../../../assets/images/Logo_silog.png" width="20%">
+        </div>
+        <div>
+            <span class="span-style"  routerLink="/dashboard">Dashboard</span>
+            <span class="span-style" routerLink="/programacion">Programación</span>
+        </div>
+        <div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <div mat-menu-item style="cursor: pointer;" routerLink="/user">Usuario</div>
+                <!-- <div mat-menu-item style="cursor: pointer;" (click)="logOut()">Desconectarse</div> -->
+            </mat-menu>
+        </div>
     </mat-toolbar>
 </div>
