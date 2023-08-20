@@ -172,7 +172,7 @@ export class DashboardComponent implements AfterViewInit {
     this.spinner.show();
     var endDate = new Date();
     var startDate = new Date();
-    startDate.setDate(endDate.getDate() - 1);
+    startDate.setDate(endDate.getDate() - 7);
     this.satControlService.GetZonesByPlateAndDate(vehiculo.vehiculo_placa, startDate, endDate).subscribe(res =>{
       const dialogRef = this.dialog.open(EnturnamientosDialogComponent,{
         data:{
