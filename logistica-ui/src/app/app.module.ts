@@ -23,6 +23,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 //spinner
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -86,7 +87,8 @@ import { UserComponent } from './components/user/user.component';
     MatDialogModule,
     MatIconModule,
     MatMenuModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    DragDropModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, AuthService, NavbarService],
