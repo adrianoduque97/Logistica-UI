@@ -37,7 +37,7 @@ export class SatcontrolService {
   }
 
   GetZonesByPlateAndDate(placa: string, startDate: Date, endDate: Date): Observable<any>{
-    var params = new HttpParams().set('Plate', placa).append('StartDate', startDate.toDateString()).append('EndDate', endDate.toDateString());
+    var params = new HttpParams().set('Plate', placa).append('StartDate', startDate.toLocaleString()).append('EndDate', endDate.toLocaleString());
     const options = { params: params}
 
     return this.http

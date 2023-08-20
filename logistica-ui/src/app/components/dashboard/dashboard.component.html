@@ -41,8 +41,36 @@
                 
             </div>
             <div class="enturnam">
-                <mat-card>
-                    <mat-card-content>ENTURNAMIENTOS</mat-card-content>
+                <mat-card >
+                    <mat-card-header class="header">ENTURNAMIENTOS</mat-card-header>
+                  
+                    <mat-table #table [dataSource]="EnturnamientosDataSource" matSort #sortEnturnamientos="matSort" class="wrapper" matTableExporter #exporterEnt="matTableExporter">
+                        <ng-container matColumnDef="placa">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
+                            <td mat-cell *matCellDef="let element"> {{element.vehiculo_placa}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="poseedor">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Poseedor </th>
+                            <td mat-cell *matCellDef="let element"> {{element.poseedor?.nombre}} </td>
+                        </ng-container>
+    
+    
+                        <ng-container matColumnDef="detalles">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Detalles </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-icon style="cursor: pointer;" (click)="OpenEnturnamientosDialog(element)">search</mat-icon>
+                            </td>
+                        </ng-container>        
+        
+                        <tr mat-header-row *matHeaderRowDef="enturnamientosColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: enturnamientosColumns;"></tr>
+                    </mat-table>
+                
+                    <mat-paginator #paginatorEnturnamientos [pageSizeOptions]="[5, 7,10]" showFirstLastButtons></mat-paginator>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="down-button" mat-button (click)="exporterEnt.exportTable('xlsx')"> Descargar Datos</button>
+                    </div>
                   </mat-card>
             </div>
         </div>
