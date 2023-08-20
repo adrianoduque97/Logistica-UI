@@ -25,10 +25,22 @@ export interface VehiculoBase {
     vehiculo_modelo: string
     vehiculo_codigo: string
     vehiculo_placa: string
+    poseedor: Poseedor
+    trailer: TrailerVehiculo
   }
   
   export interface ClaseVehiculo {
     codigo: string
     nombre: string
+  }
+  
+  export interface Poseedor {
+    codigo: string
+    nombre: string
+  }
+  
+  export interface TrailerVehiculo {
+    codigo?: string
+    placa?: string
   }
   

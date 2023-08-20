@@ -34,5 +34,4 @@ export class MantenimientoDialogComponent {
     }
 
     mantenimientoColumns = ['codigo', 'estado', 'conductor', 'Inicio']
-
 }
