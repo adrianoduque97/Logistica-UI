@@ -3,9 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Mantenimiento } from 'src/app/models/mantenimiento';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
-import { MantenimientoDialogComponent } from '../mantenimiento-dialog/mantenimiento-dialog.component';
 import { Zona } from 'src/app/models/zona';
 
 @Component({
@@ -31,7 +29,5 @@ export class EnturnamientosDialogComponent implements AfterViewInit {
     ngAfterViewInit() {
       this.zoneInfo.paginator = this.paginator
   }
-
-
   enturnamientoColumns = ['Id', 'nombre','dateIn', 'dateOut', 'location']
 }
