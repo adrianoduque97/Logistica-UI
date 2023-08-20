@@ -36,6 +36,15 @@ export class SatcontrolService {
     .pipe(retry(1), catchError(this.errorHandle));
   }
 
+  GetZonesByPlateAndDate(placa: string, startDate: Date, endDate: Date): Observable<any>{
+    var params = new HttpParams().set('Plate', placa).append('StartDate', startDate.toDateString()).append('EndDate', endDate.toDateString());
+    const options = { params: params}
+
+    return this.http
+    .get<any>(this.baseurl+'GetZonesByPlateAndDate', options)
+    .pipe(retry(1), catchError(this.errorHandle));
+  }
+
 
   errorHandle(error: { error: { message: string; }; status: any; message: any; }) {
     let errorMessage = '';
