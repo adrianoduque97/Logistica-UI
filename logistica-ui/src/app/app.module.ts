@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api-service.service';
 import { LoginComponent } from './components/login/login.component';
 import { RestoreComponent } from './components/restore/restore.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
+
+// Mat imports
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +22,9 @@ import {MatCardModule} from '@angular/material/card';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+
+//spinner
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 // Firebase services + environment module
@@ -75,8 +79,10 @@ import { GPSDialogComponent } from './components/dialogs/cabezal-dialog/gps-dial
     MatCardModule,
     MatTableExporterModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    NgxSpinnerModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, AuthService, NavbarService],
   bootstrap: [AppComponent]
 })
