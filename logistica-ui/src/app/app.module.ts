@@ -22,6 +22,8 @@ import {MatCardModule} from '@angular/material/card';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 //spinner
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -44,6 +46,7 @@ import { DetailsDialogComponent } from './components/dialogs/details-dialog/deta
 import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento-dialog/mantenimiento-dialog.component';
 import { GPSDialogComponent } from './components/dialogs/cabezal-dialog/gps-dialog.component';
 import { EnturnamientosDialogComponent } from './components/dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
@@ -57,7 +60,8 @@ import { EnturnamientosDialogComponent } from './components/dialogs/enturnamient
     DetailsDialogComponent,
     MantenimientoDialogComponent,
     GPSDialogComponent,
-    EnturnamientosDialogComponent
+    EnturnamientosDialogComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +86,9 @@ import { EnturnamientosDialogComponent } from './components/dialogs/enturnamient
     MatTableExporterModule,
     MatDialogModule,
     MatIconModule,
-    NgxSpinnerModule
+    MatMenuModule,
+    NgxSpinnerModule,
+    DragDropModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, AuthService, NavbarService],
