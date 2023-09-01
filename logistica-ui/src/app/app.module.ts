@@ -39,7 +39,7 @@ import { environment } from '../enviroments/enviroment';
 import { PlannerComponent } from './components/planner/planner.component';
 import { AuthService } from './services/auth.service';
 
-import { GoogleChartsModule } from 'angular-google-charts';
+// import { GoogleChartsModule } from 'angular-google-charts';
 import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DetailsDialogComponent } from './components/dialogs/details-dialog/details-dialog.component';
@@ -74,7 +74,7 @@ import { UserComponent } from './components/user/user.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    GoogleChartsModule,
+    // GoogleChartsModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
