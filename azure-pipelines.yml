@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install -g @angular/cli@15.1.4
+    npm install -g @angular/cli@15.2.9
     cd logistica-ui
     npm install --force
     ng build --configuration production
