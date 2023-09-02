@@ -69,4 +69,23 @@
 .mat-row {
     width: 100%;
 }
+
+/* MEDIA QUERIES */
+
+@media all and (max-width: 700px) {
+  .container{
+    grid-template-columns: 1fr;
+}
+.center-container{
+  justify-content: flex-start;
+}
+.mat-mdc-card {
+  width: 370px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.mat-mdc-card-content{
+  overflow: auto;
+}
+}
   
