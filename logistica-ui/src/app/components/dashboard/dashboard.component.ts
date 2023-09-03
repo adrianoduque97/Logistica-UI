@@ -13,6 +13,7 @@ import { MantenimientoDialogComponent } from '../dialogs/mantenimiento-dialog/ma
 import { SatcontrolService } from 'src/app/services/satcontrol.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { EnturnamientosDialogComponent } from '../dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -51,6 +52,7 @@ export class DashboardComponent implements AfterViewInit {
 
 
   constructor(public navService: NavbarService,
+    public authService: AuthService,
     public silogtranService: SilogtranService,
     public satControlService: SatcontrolService,
     public spinner: NgxSpinnerService,
