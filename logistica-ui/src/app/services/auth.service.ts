@@ -30,7 +30,21 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       }
     });
+
+    this.afAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+      } else {
+        localStorage.setItem('user', '');
+        this.router.navigate(['login']);
+      }
+    });
+    
   }
+
+  
+
   // Sign in with email/password
   SignIn(email: string, password: string) {
     return this.afAuth['signInWithEmailAndPassword'](email, password)

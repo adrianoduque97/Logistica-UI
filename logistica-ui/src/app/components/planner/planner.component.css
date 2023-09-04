@@ -3,10 +3,14 @@
     min-height: 450px;
   } */
 
+  .main-card{
+    flex-direction: row;
+  }
+
   .example-container {
     width: 400px;
     max-width: 100%;
-    margin: 0 25px 25px 0;
+    margin: 5%;
     display: inline-block;
     vertical-align: top;
   }
