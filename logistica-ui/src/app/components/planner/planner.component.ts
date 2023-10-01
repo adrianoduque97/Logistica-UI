@@ -1,5 +1,6 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PlannerInfo } from 'src/app/models/plannerInfo';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -9,30 +10,39 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./planner.component.css']
 })
 export class PlannerComponent implements OnInit {
+  plannerForm: FormGroup;
+  data:PlannerInfo = new PlannerInfo();
 
-  myWidht = 700;
-
-  constructor(public navService: NavbarService ){}
+  list = ["Hola","Adrin","Pepe"];
+  selectedlist = this.list;
+  constructor(public navService: NavbarService, public authService: AuthService, ){
+    this.plannerForm = new FormGroup({
+      placa: new FormControl('', Validators.required),
+      arrastre:new FormControl('', Validators.required),
+      cliente:new FormControl('', Validators.required),
+      ruta:new FormControl('', Validators.required),
+      fecha:new FormControl<Date|null>(null, Validators.required),
+      conductor:new FormControl('', Validators.required),
+    });
+  }
 
   ngOnInit(): void {
     this.navService.show();
+    this.data={}
   }
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  onClick(){
+    this.data.placa= this.plannerForm.value.placa;
+    this.data.arrastre= this.plannerForm.value.arrastre;
+  }
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
+  onKey(event:Event) { 
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.selectedlist = this.search(filterValue);
     }
-  }
 
+    search(value: string) { 
+      let filter = value.toLowerCase();
+      return this.list.filter(option => option.toLowerCase().startsWith(filter));
+    }
 }
