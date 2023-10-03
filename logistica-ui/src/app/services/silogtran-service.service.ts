@@ -7,6 +7,7 @@ import { RutasBase } from '../models/rutas';
 import { ContenedorBase } from '../models/contenedor';
 import { QueryParams } from '../models/query-params';
 import { MantenimientoBase } from '../models/mantenimiento';
+import { ClienteBase } from '../models/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,9 @@ export class SilogtranService {
   }
 
 
-  GetTrailers(token: string, { pagina, placa, codigo }: QueryParams): Observable<TrailerBase> {
+  GetTrailers(token: string, { pagina, placa, codigo, estado }: QueryParams): Observable<TrailerBase> {
     var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getTraileres')
-      .append('pagina', pagina ?? '').append('placa', placa ?? '').append('codigo', codigo ?? '');
+      .append('estado_codigo', estado ?? '').append('pagina', pagina ?? '').append('placa', placa ?? '').append('codigo', codigo ?? '');
     var headers = new HttpHeaders().set('Authorization', token)
 
     const options = { params: params, headers: headers }
@@ -49,9 +50,9 @@ export class SilogtranService {
       .pipe(retry(1), catchError(this.errorHandle));
   }
 
-  GetVehiculos(token: string, { pagina, placa, codigo }: QueryParams): Observable<VehiculoBase> {
+  GetVehiculos(token: string, { pagina, placa, codigo, estado }: QueryParams): Observable<VehiculoBase> {
     var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getVehiculos')
-      .append('pagina', pagina ?? '').append('placa', placa ?? '').append('codigo', codigo ?? '');
+    .append('estado_codigo', estado ?? '').append('pagina', pagina ?? '').append('placa', placa ?? '').append('codigo', codigo ?? '');
     var headers = new HttpHeaders().set('Authorization', token)
 
     const options = { params: params, headers: headers }
@@ -61,9 +62,9 @@ export class SilogtranService {
       .pipe(retry(1), catchError(this.errorHandle));
   }
 
-  GetRutas(token: string, { origen, destino, pagina, codigo }: QueryParams): Observable<RutasBase> {
+  GetRutas(token: string, { origen, destino, pagina, codigo, estado }: QueryParams): Observable<RutasBase> {
     var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getRutas')
-      .append('ciudad_origen', origen ?? '').append('ciudad_destino', destino ?? '')
+    .append('estado_codigo', estado ?? '').append('ciudad_origen', origen ?? '').append('ciudad_destino', destino ?? '')
       .append('pagina', pagina ?? '').append('codigo', codigo ?? '');
     var headers = new HttpHeaders().set('Authorization', token)
 
@@ -77,6 +78,18 @@ export class SilogtranService {
   GetContenedores(token: string, { pagina, numero, codigo }: QueryParams): Observable<ContenedorBase> {
     var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getContenedores')
       .append('pagina', pagina ?? '').append('numero', numero ?? '').append('codigo', codigo ?? '');
+    var headers = new HttpHeaders().set('Authorization', token);
+
+    const options = { params: params, headers: headers }
+
+    return this.http
+      .get<any>(this.baseurl, options)
+      .pipe(retry(1), catchError(this.errorHandle));
+  }
+
+  GetClientes(token: string, { pagina, estado }: QueryParams): Observable<ClienteBase> {
+    var params = new HttpParams().set('api', 'Servicio.ApiProvizcaino.getClientes')
+      .append('pagina', pagina ?? '').append('estado_codigo', estado ?? '');
     var headers = new HttpHeaders().set('Authorization', token);
 
     const options = { params: params, headers: headers }

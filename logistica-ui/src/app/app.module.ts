@@ -23,7 +23,9 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 //spinner
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -74,7 +76,6 @@ import { UserComponent } from './components/user/user.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    // GoogleChartsModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -88,7 +89,9 @@ import { UserComponent } from './components/user/user.component';
     MatIconModule,
     MatMenuModule,
     NgxSpinnerModule,
-    DragDropModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, AuthService, NavbarService],
