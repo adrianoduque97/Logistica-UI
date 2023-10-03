@@ -7,4 +7,5 @@ export interface QueryParams {
     placa?: string
     numero?: string
     equipo?: string
+    estado?: string
 }

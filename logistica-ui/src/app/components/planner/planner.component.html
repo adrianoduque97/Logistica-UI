@@ -1,39 +1,68 @@
-<!-- <div>
-    <div class="centered main-card" style="align-items: center; justify-content: center;">
-        <div>
-            <google-chart #chart [type]="changingChart.type"
-            [data]="changingChart.data"
-            [columns]="changingChart.columns" [options]="changingChart.options" [width]="800" ></google-chart>
+<div class="centered main-card">
+    <div class="normal-side center-flex" style="flex-direction:column;">
+        <div class="title">
+            Planificador
         </div>
-    </div>
-</div> -->
+        <div class="info-form">
+            <form class="example-form"  [formGroup]="plannerForm" style="overflow: hidden;">
 
-<div class="centered main-card" style="align-items: center; justify-content: center;">
-    <div class="example-container">
-        <h2>To do</h2>
-      
-        <div
-          cdkDropList
-          #todoList="cdkDropList"
-          [cdkDropListData]="todo"
-          [cdkDropListConnectedTo]="[doneList]"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+                <div class="regular-flex">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Placa</mat-label>
+                        <input formControlName="placa" matInput placeholder="PKG-890">
+                      </mat-form-field>
+                    
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Arrastre</mat-label>
+                        <input formControlName="arrastre" matInput placeholder="PKG-890">
+                      </mat-form-field>
+                </div>
+
+                <div class="regular-flex">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Cliente</mat-label>
+                        <mat-select formControlName="cliente" matInput>
+                          <span class="search-input">
+                            <input (keyup)="onKey($event,'clientes')" matInput>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+                          </span>
+                          <mat-option *ngFor="let value of selectedClients" [value]="value">{{value.cliente_nombre}}</mat-option>
+                      </mat-select>
+                      </mat-form-field>
+    
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Ruta</mat-label>
+                        <mat-select formControlName="ruta" matInput  placeholder="Quito-Bogota">
+                          <span class="search-input">
+                            <input ((keyup))="onKey($event,'rutas')" matInput>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+                          </span>
+                          <mat-option *ngFor="let value of selectedRutas" [value]="value">{{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}</mat-option>
+                      </mat-select>
+                      </mat-form-field>
+                </div>
+
+                <div class="regular-flex">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Fecha</mat-label>
+                        <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+    
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Conductor</mat-label>
+                        <input formControlName="conductor" matInput placeholder="PKG-890">
+                      </mat-form-field>
+                </div>
+
+                <button class="example-full-width " style="margin-left: 10px;" mat-raised-button color="primary" [disabled]="!plannerForm.valid" (click)="onClick()">Ingresar</button>
+            </form>
         </div>
       </div>
       
-      <div class="example-container">
+      <div class="normal-side center-flex">
         <h2>Done</h2>
-      
-        <div
-          cdkDropList
-          #doneList="cdkDropList"
-          [cdkDropListData]="done"
-          [cdkDropListConnectedTo]="[todoList]"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
-        </div>
+  
       </div>
 </div>
