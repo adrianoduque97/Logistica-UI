@@ -9,11 +9,7 @@
                 <div class="regular-flex">
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Placa</mat-label>
-                        <!-- <input formControlName="placa" matInput placeholder="AFR-009" > -->
-                        <mat-select formControlName="placa" matInput>
-                            <input (keyup)="onKey($event)" matInput>
-                            <mat-option *ngFor="let value of selectedlist" [value]="value">{{value}}</mat-option>
-                        </mat-select>
+                        <input formControlName="placa" matInput placeholder="PKG-890">
                       </mat-form-field>
                     
                       <mat-form-field class="example-full-width" appearance="fill">
@@ -25,12 +21,24 @@
                 <div class="regular-flex">
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Cliente</mat-label>
-                        <input formControlName="cliente" matInput placeholder="Ikea">
+                        <mat-select formControlName="cliente" matInput>
+                          <span class="search-input">
+                            <input (keyup)="onKey($event,'clientes')" matInput>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+                          </span>
+                          <mat-option *ngFor="let value of selectedClients" [value]="value">{{value.cliente_nombre}}</mat-option>
+                      </mat-select>
                       </mat-form-field>
     
                       <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Ruta</mat-label>
-                        <input formControlName="ruta" matInput placeholder="Quito-Bogota">
+                        <mat-select formControlName="ruta" matInput  placeholder="Quito-Bogota">
+                          <span class="search-input">
+                            <input ((keyup))="onKey($event,'rutas')" matInput>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+                          </span>
+                          <mat-option *ngFor="let value of selectedRutas" [value]="value">{{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}</mat-option>
+                      </mat-select>
                       </mat-form-field>
                 </div>
 
