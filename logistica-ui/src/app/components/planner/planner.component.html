@@ -34,10 +34,12 @@
                         <mat-label>Ruta</mat-label>
                         <mat-select formControlName="ruta" matInput  placeholder="Quito-Bogota">
                           <span class="search-input">
-                            <input (keyup)="onKey($event,'rutas')" matInput>
+                            <input (keyup)="onKey($event,'rutas')" (keydown)="$event.stopPropagation()" matInput>
                             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
                           </span>
-                          <mat-option *ngFor="let value of selectedRutas" [value]="value">{{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}</mat-option>
+                          <mat-option *ngFor="let value of selectedRutas" [value]="value"  [matTooltip]="'Ruta Indicada: ' + value?.ruta_indicacion">
+                            {{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}
+                          </mat-option>
                       </mat-select>
                       </mat-form-field>
                 </div>

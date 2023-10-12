@@ -71,10 +71,10 @@ export class PlannerComponent implements OnInit {
 
     search(value: string, type:string) { 
       let filter = value.toLowerCase();
-
       switch (type){
         case 'rutas':{
-          this.selectedRutas = this.rutaList.filter(option => option.ciudad_origen.nombre.toLowerCase().startsWith(filter) || option.ciudad_destino.nombre.toLocaleLowerCase().startsWith(filter));
+          var spacedRoutes = filter.split(/[\s-]+/);
+          this.selectedRutas = spacedRoutes.length > 1 ? this.rutaList.filter(option => option.ciudad_origen.nombre.toLowerCase().includes(spacedRoutes[0]) && option.ciudad_destino.nombre.toLocaleLowerCase().includes(spacedRoutes[1])) : this.rutaList.filter(option => option.ciudad_origen.nombre.toLowerCase().includes(filter) || option.ciudad_destino.nombre.toLocaleLowerCase().includes(filter));
           return;
         }
 
