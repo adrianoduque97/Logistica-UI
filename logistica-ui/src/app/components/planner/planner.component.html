@@ -9,16 +9,28 @@
                 <div class="regular-flex">
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Placa</mat-label>
-                        <input formControlName="placa" matInput placeholder="PKG-890">
+                        <mat-select formControlName="placa" matInput placeholder="PKG-890">
+                          <span class="search-input">
+                            <input (keyup)="onKey($event,'vehiculos')" matInput>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+                          </span>
+                          <mat-option *ngFor="let value of selectedVehiculos" [value]="value">{{value.vehiculo_placa}}</mat-option>
+                      </mat-select>
                       </mat-form-field>
                     
                       <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Arrastre</mat-label>
-                        <input formControlName="arrastre" matInput placeholder="PKG-890">
+                        <mat-select formControlName="arrastre" matInput placeholder="CP090">
+                          <span class="search-input">
+                            <input (keyup)="onKey($event,'arrastres')" matInput>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+                          </span>
+                          <mat-option *ngFor="let value of selectedArrastres" [value]="value">{{value.trailer_placa}}</mat-option>
+                      </mat-select>
                       </mat-form-field>
                 </div>
 
-                <div class="regular-flex">
+                <!-- <div class="regular-flex"> -->
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Cliente</mat-label>
                         <mat-select formControlName="cliente" matInput>
@@ -42,14 +54,14 @@
                           </mat-option>
                       </mat-select>
                       </mat-form-field>
-                </div>
+                <!-- </div> -->
 
                 <div class="regular-flex">
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Fecha</mat-label>
-                        <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
+                        <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [ngxMatDatetimePicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #picker   [touchUi]="false" [enableMeridian]="true"></ngx-mat-datetime-picker>
                       </mat-form-field>
     
                       <mat-form-field class="example-full-width" appearance="fill">
@@ -58,13 +70,27 @@
                       </mat-form-field>
                 </div>
 
+                <div class="regular-flex" *ngIf="data.duracion != null && data.fin != null"  >
+                  <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Duracion (Horas)</mat-label>
+                      <input [value]="data.duracion" matInput disabled="true">
+                    </mat-form-field>
+  
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Fecha (Fin)</mat-label>
+                      <input [value]="data.fin.toLocaleString('en-GB')" matInput disabled="true">
+                    </mat-form-field>
+              </div>
+
                 <button class="example-full-width " style="margin-left: 10px;" mat-raised-button color="primary" [disabled]="!plannerForm.valid" (click)="onClick()">Ingresar</button>
             </form>
         </div>
       </div>
       
       <div class="normal-side center-flex">
-        <h2>Done</h2>
+        <div *ngFor="let a of dataCreated">
+          {{a}}
+        </div>
   
       </div>
 </div>
