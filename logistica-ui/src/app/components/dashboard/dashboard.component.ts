@@ -63,16 +63,12 @@ export class DashboardComponent implements AfterViewInit {
     this.navService.show();
     this.silogtranService.GetToken().subscribe(res => {
       this.silogtranService.GetTrailers(res.data.token, { pagina: '1' }).subscribe(x => {
-        console.log(x.data);
-
         this.trailerDataSource.data = x.data;
         this.trailerDataSource.paginator = this.paginatorTrailer;
         this.trailerDataSource.sort = this.sortTrailer;
       });
 
       this.silogtranService.GetVehiculos(res.data.token, { pagina: '1' }).subscribe(x => {
-        console.log(x.data);
-
         this.VehiculosoDataSource.data = x.data;
         this.VehiculosoDataSource.paginator = this.paginatorVehiculos;
         this.VehiculosoDataSource.sort = this.sortVehiculos;

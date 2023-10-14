@@ -11,6 +11,7 @@ export interface Rutas {
     ciudad_destino: CiudadDestino
     ruta_indicacion?: string
     estado: Estado
+    tiempo: number
 }
 
 export interface CiudadOrigen {
