@@ -18,6 +18,7 @@ import { SilogtranService } from 'src/app/services/silogtran-service.service';
 export class PlannerComponent implements OnInit {
   plannerForm: FormGroup;
   data:PlannerInfo = new PlannerInfo();
+  dataCreated:Array<PlannerInfo> = new Array;
 
   // Data objects
   clientList: Cliente[] = [];
@@ -85,8 +86,9 @@ export class PlannerComponent implements OnInit {
 
     var duracionViaje = (this?.data?.ruta?.tiempo??0)/60;
     this.data.duracion = duracionViaje;
-    this.data.fin = addHours(this.data.fecha,duracionViaje)
-    console.log(this.data);
+    this.data.fin = addHours(this.data.fecha,duracionViaje);
+
+    this.dataCreated.push(this.data);
     
   }
 
@@ -127,7 +129,8 @@ export class PlannerComponent implements OnInit {
 }
 
 function addHours(date?: Date, hours?:number):Date {
-  date?.setTime(date?.getTime() + (hours??0) * 60 * 60 * 1000);
+  var dateTemp = new Date(date as Date);
+  dateTemp?.setTime(dateTemp?.getTime() + (hours??0) * 60 * 60 * 1000);
 
-  return date??new Date();
+  return dateTemp??new Date();
 }

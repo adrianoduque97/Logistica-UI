@@ -78,7 +78,7 @@
   
                     <mat-form-field class="example-full-width" appearance="fill">
                       <mat-label>Fecha (Fin)</mat-label>
-                      <input [value]="data.fin" matInput disabled="true">
+                      <input [value]="data.fin.toLocaleString('en-GB')" matInput disabled="true">
                     </mat-form-field>
               </div>
 
@@ -88,7 +88,9 @@
       </div>
       
       <div class="normal-side center-flex">
-        <h2>Done</h2>
+        <div *ngFor="let a of dataCreated">
+          {{a}}
+        </div>
   
       </div>
 </div>
