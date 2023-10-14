@@ -86,7 +86,7 @@ export class PlannerComponent implements OnInit {
 
     var duracionViaje = (this?.data?.ruta?.tiempo??0)/60;
     this.data.duracion = duracionViaje;
-
+    this.data.fin = addHours(this.data.fecha,duracionViaje)
     console.log(this.data);
     
   }
@@ -125,4 +125,10 @@ export class PlannerComponent implements OnInit {
         }
       }
     }
+}
+
+function addHours(date?: Date, hours?:number):Date {
+  date?.setTime(date?.getTime() + (hours??0) * 60 * 60 * 1000);
+
+  return date??new Date();
 }

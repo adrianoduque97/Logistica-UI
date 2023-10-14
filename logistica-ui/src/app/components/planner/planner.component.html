@@ -70,16 +70,16 @@
                       </mat-form-field>
                 </div>
 
-                <div class="regular-flex" *ngIf="data.duracion != null"  >
+                <div class="regular-flex" *ngIf="data.duracion != null && data.fin != null"  >
                   <mat-form-field class="example-full-width" appearance="fill">
                       <mat-label>Duracion (Horas)</mat-label>
-                      <input [value]="data.duracion" matInput>
+                      <input [value]="data.duracion" matInput disabled="true">
                     </mat-form-field>
   
-                    <!-- <mat-form-field class="example-full-width" appearance="fill">
-                      <mat-label>Conductor</mat-label>
-                      <input formControlName="conductor" matInput placeholder="PKG-890">
-                    </mat-form-field> -->
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Fecha (Fin)</mat-label>
+                      <input [value]="data.fin" matInput disabled="true">
+                    </mat-form-field>
               </div>
 
                 <button class="example-full-width " style="margin-left: 10px;" mat-raised-button color="primary" [disabled]="!plannerForm.valid" (click)="onClick()">Ingresar</button>
