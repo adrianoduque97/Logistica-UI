@@ -67,7 +67,6 @@ export class PlannerComponent implements OnInit {
       });
 
       this.silogtranService.GetVehiculos(res.data.token, { estado: '19' }).subscribe(x => {
-        console.log(x.data);
         this.vehiculosList = x.data;
         this.selectedVehiculos = this.vehiculosList;
         this.spinner.hide();

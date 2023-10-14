@@ -27,7 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 //spinner
 import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -93,7 +93,10 @@ import { UserComponent } from './components/user/user.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, AuthService, NavbarService],

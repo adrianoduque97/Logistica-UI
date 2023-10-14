@@ -59,9 +59,9 @@
                 <div class="regular-flex">
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Fecha</mat-label>
-                        <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
+                        <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [ngxMatDatetimePicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #picker   [touchUi]="false" [enableMeridian]="true"></ngx-mat-datetime-picker>
                       </mat-form-field>
     
                       <mat-form-field class="example-full-width" appearance="fill">
