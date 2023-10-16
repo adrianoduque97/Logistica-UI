@@ -4,6 +4,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente, ClienteBase } from 'src/app/models/cliente';
 import { PlannerInfo } from 'src/app/models/plannerInfo';
 import { Rutas } from 'src/app/models/rutas';
+import { Trailer } from 'src/app/models/trailer';
+import { Vehiculo } from 'src/app/models/vehiculo';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
@@ -16,12 +18,20 @@ import { SilogtranService } from 'src/app/services/silogtran-service.service';
 export class PlannerComponent implements OnInit {
   plannerForm: FormGroup;
   data:PlannerInfo = new PlannerInfo();
+  dataCreated:Array<PlannerInfo> = new Array;
+
+  // Data objects
   clientList: Cliente[] = [];
   rutaList: Rutas[] = [];
+  arrastresList: Trailer[] = [];
+  vehiculosList: Vehiculo[]=[];
 
-  list = ["Hola","Adrin","Pepe"];
+  // List for selected information
   selectedClients = this.clientList;
   selectedRutas = this.rutaList;
+  selectedArrastres = this.arrastresList;
+  selectedVehiculos = this.vehiculosList;
+
   constructor(public navService: NavbarService, 
               public authService: AuthService, 
               public silogtranService: SilogtranService,
@@ -49,18 +59,36 @@ export class PlannerComponent implements OnInit {
 
       this.silogtranService.GetRutas(res.data.token, {estado:'15'}).subscribe( x=>{
         this.rutaList = x.data;
-        this.selectedRutas = this.rutaList;
-        console.log(x.data);
-        
+        this.selectedRutas = this.rutaList;        
+      });
+
+      this.silogtranService.GetTrailers(res.data.token, { estado: '426' }).subscribe(x => {
+        this.arrastresList = x.data;
+        this.selectedArrastres = this.arrastresList
+      });
+
+      this.silogtranService.GetVehiculos(res.data.token, { estado: '19' }).subscribe(x => {
+        this.vehiculosList = x.data;
+        this.selectedVehiculos = this.vehiculosList;
         this.spinner.hide();
       });
+
     });
   }
 
   onClick(){
-    this.data.placa= this.plannerForm.value.placa;
-    this.data.arrastre= this.plannerForm.value.arrastre;
-    console.log(this.plannerForm.value);
+    this.data.placa= this.plannerForm?.value?.placa;
+    this.data.arrastre= this.plannerForm?.value?.arrastre;
+    this.data.cliente = this.plannerForm?.value?.cliente;
+    this.data.ruta = this.plannerForm?.value?.ruta;
+    this.data.fecha = this.plannerForm?.value?.fecha;
+    this.data.conductor = this.plannerForm?.value?.conductor;
+
+    var duracionViaje = (this?.data?.ruta?.tiempo??0)/60;
+    this.data.duracion = duracionViaje;
+    this.data.fin = addHours(this.data.fecha,duracionViaje);
+
+    this.dataCreated.push(this.data);
     
   }
 
@@ -71,15 +99,25 @@ export class PlannerComponent implements OnInit {
 
     search(value: string, type:string) { 
       let filter = value.toLowerCase();
-
       switch (type){
         case 'rutas':{
-          this.selectedRutas = this.rutaList.filter(option => option.ciudad_origen.nombre.toLowerCase().startsWith(filter) || option.ciudad_destino.nombre.toLocaleLowerCase().startsWith(filter));
+          var spacedRoutes = filter.split(/[\s-]+/);
+          this.selectedRutas = spacedRoutes.length > 1 ? this.rutaList.filter(option => option.ciudad_origen.nombre.toLowerCase().includes(spacedRoutes[0]) && option.ciudad_destino.nombre.toLocaleLowerCase().includes(spacedRoutes[1])) : this.rutaList.filter(option => option.ciudad_origen.nombre.toLowerCase().includes(filter) || option.ciudad_destino.nombre.toLocaleLowerCase().includes(filter));
           return;
         }
 
         case 'clientes':{
-          this.selectedClients = this.clientList.filter(option => option.cliente_nombre.toLowerCase().startsWith(filter));
+          this.selectedClients = this.clientList.filter(option => option.cliente_nombre.toLowerCase().includes(filter));
+          return
+        }
+
+        case 'arrastres':{
+          this.selectedArrastres = this.arrastresList.filter(option => option.trailer_placa.toLowerCase().includes(filter));
+          return
+        }
+
+        case 'vehiculos':{
+          this.selectedVehiculos = this.vehiculosList.filter(option => option.vehiculo_placa.toLowerCase().includes(filter));
           return
         }
 
@@ -88,4 +126,11 @@ export class PlannerComponent implements OnInit {
         }
       }
     }
+}
+
+function addHours(date?: Date, hours?:number):Date {
+  var dateTemp = new Date(date as Date);
+  dateTemp?.setTime(dateTemp?.getTime() + (hours??0) * 60 * 60 * 1000);
+
+  return dateTemp??new Date();
 }
