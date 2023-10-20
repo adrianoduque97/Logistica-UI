@@ -11,3 +11,84 @@
 ::ng-deep .mat-mdc-form-field{
   padding-left: 10px;
 }
+
+.mat-table {
+  max-width: 1200px;
+}
+
+.mat-mdc-card-header{
+  background-color: rgb(74, 87, 178)/*rgb(159, 168, 218)*/;
+  color: white;
+  padding: 5px;
+}
+.down-button{
+  background-color: rgb(74, 87, 178);
+  color: white;
+  padding: 5px;
+  margin: 2px;
+}
+
+.mat-mdc-button{
+  color: white;
+}
+mat-table {
+  width: 100%;
+}
+
+table td, table th {
+  padding: 2px 10px;
+}
+td {
+  text-align: center
+}
+
+
+.mat-table__wrapper .mat-table {
+  min-width: auto !important;
+  width: 100% !important;
+}
+
+.mat-header-row {
+  width: 100%;
+}
+
+.mat-row {
+  width: 100%;
+}
+
+.header{
+  justify-content: center;
+  margin-bottom: 3px;
+}
+
+.wrapper {
+  /* width: 400px; */
+  overflow: auto;
+}
+
+.table-flex{
+  width: 70%; 
+  padding: 2%;
+}
+
+
+@media all and (max-width: 700px) {
+  .container{
+    grid-template-columns: 1fr;
+}
+.center-container{
+  justify-content: flex-start;
+}
+.mat-mdc-card {
+  width: 340px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.mat-mdc-card-content{
+  overflow: auto;
+}
+
+.regular-flex{
+  display: block;
+}
+}
