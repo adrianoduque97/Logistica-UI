@@ -8,6 +8,7 @@ import { ContenedorBase } from '../models/contenedor';
 import { QueryParams } from '../models/query-params';
 import { MantenimientoBase } from '../models/mantenimiento';
 import { ClienteBase } from '../models/cliente';
+import { ConductorBase } from '../models/conductor';
 
 @Injectable({
   providedIn: 'root'
@@ -108,6 +109,23 @@ export class SilogtranService {
 
     return this.http
       .get<any>(this.baseurl, options)
+      .pipe(retry(1), catchError(this.errorHandle));
+  }
+
+  PostConductores(token: string, { estado }: QueryParams): Observable<ConductorBase> {
+    var params = new HttpParams().set('api', 'servicio.ApiProvizcaino.getTerceros')
+    var headers = new HttpHeaders().set('Authorization', token);
+
+    var bodyValues = {
+      "tipo_tercero": ["CONDUCTOR","POSEEDOR"],
+      "estado_codigo": estado
+    }
+
+    const options = { params: params, headers: headers}
+    const body = JSON.stringify(bodyValues);
+
+    return this.http
+      .post<any>(this.baseurl, body, options)
       .pipe(retry(1), catchError(this.errorHandle));
   }
 

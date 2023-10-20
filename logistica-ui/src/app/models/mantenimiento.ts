@@ -9,7 +9,7 @@ export interface MantenimientoBase {
     codigo: string
     estado: Estado
     equipo: Equipo
-    conductor: Conductor
+    conductor: ConductorMantenimiento
     fecha_inicio: string
     fecha_compromiso: any
     observacion: any
@@ -25,7 +25,7 @@ export interface MantenimientoBase {
     nombre: string
   }
   
-  export interface Conductor {
+  export interface ConductorMantenimiento {
     codigo: string
     nombrecompleto: string
   }

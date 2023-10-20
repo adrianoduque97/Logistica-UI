@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Cliente, ClienteBase } from 'src/app/models/cliente';
+import { Cliente } from 'src/app/models/cliente';
+import { Conductor } from 'src/app/models/conductor';
 import { PlannerInfo } from 'src/app/models/plannerInfo';
 import { Rutas } from 'src/app/models/rutas';
 import { Trailer } from 'src/app/models/trailer';
@@ -16,21 +20,35 @@ import { SilogtranService } from 'src/app/services/silogtran-service.service';
   styleUrls: ['./planner.component.css']
 })
 export class PlannerComponent implements OnInit {
+
+  // planner table
+  @ViewChild('paginatorPlanner', { static: true }) paginatorPlanner!: MatPaginator;
+  @ViewChild('sortPlanner', { static: true }) sortPlanner!: MatSort;
+  @ViewChild('filterPlanner', { static: true }) filterPlanner!: ElementRef;
+  plannerColumns = ['Placa', 'Arrastre','Cliente','Ruta','Fecha Inicio', 'Conductor', 'Fecha Fin'];
+
+  
   plannerForm: FormGroup;
   data:PlannerInfo = new PlannerInfo();
   dataCreated:Array<PlannerInfo> = new Array;
+  plannerDataCreated = new MatTableDataSource<PlannerInfo>();
 
   // Data objects
   clientList: Cliente[] = [];
   rutaList: Rutas[] = [];
   arrastresList: Trailer[] = [];
   vehiculosList: Vehiculo[]=[];
+  conductoresList:Conductor[] = [];
 
   // List for selected information
   selectedClients = this.clientList;
   selectedRutas = this.rutaList;
   selectedArrastres = this.arrastresList;
   selectedVehiculos = this.vehiculosList;
+  selectedConductores = this.conductoresList;
+
+  duracion = 0;
+  fechaFin = new Date();
 
   constructor(public navService: NavbarService, 
               public authService: AuthService, 
@@ -73,7 +91,13 @@ export class PlannerComponent implements OnInit {
         this.spinner.hide();
       });
 
+      this.silogtranService.PostConductores(res.data.token, {estado: '1'}).subscribe(x => {
+        this.conductoresList = x.data;
+        this.selectedConductores = this.conductoresList;
+      });
     });
+    this.plannerDataCreated.paginator = this.paginatorPlanner;
+    this.plannerDataCreated.sort = this.sortPlanner;   
   }
 
   onClick(){
@@ -86,10 +110,14 @@ export class PlannerComponent implements OnInit {
 
     var duracionViaje = (this?.data?.ruta?.tiempo??0)/60;
     this.data.duracion = duracionViaje;
+    this.duracion = duracionViaje;
     this.data.fin = addHours(this.data.fecha,duracionViaje);
+    this.fechaFin =  this.data.fin;
 
     this.dataCreated.push(this.data);
-    
+    this.plannerDataCreated.data = this.dataCreated;    
+
+    setTimeout( () => this.data = new PlannerInfo(), 2000);
   }
 
   onKey(event:Event, type:string) { 
@@ -118,6 +146,11 @@ export class PlannerComponent implements OnInit {
 
         case 'vehiculos':{
           this.selectedVehiculos = this.vehiculosList.filter(option => option.vehiculo_placa.toLowerCase().includes(filter));
+          return
+        }
+
+        case 'conductores':{
+          this.selectedConductores = this.conductoresList.filter(option => option.nombre_completo.toLowerCase().includes(filter));
           return
         }
 

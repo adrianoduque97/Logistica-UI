@@ -1,9 +1,12 @@
+import { Cliente } from "./cliente"
 import { Rutas } from "./rutas"
+import { Trailer } from "./trailer"
+import { Vehiculo } from "./vehiculo"
 
 export class PlannerInfo {
-    placa?: string
-    arrastre?: string
-    cliente?: string
+    placa?: Vehiculo
+    arrastre?: Trailer
+    cliente?: Cliente
     ruta?: Rutas
     fecha?: Date
     conductor?: string

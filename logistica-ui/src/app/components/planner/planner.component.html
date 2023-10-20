@@ -1,96 +1,159 @@
 <div class="centered main-card">
-    <div class="normal-side center-flex" style="flex-direction:column;">
-        <div class="title">
-            Planificador
+  <div class="normal-side center-flex" style="flex-direction:column;">
+    <div class="title">
+      Planificador
+    </div>
+    <div class="info-form">
+      <form class="example-form" [formGroup]="plannerForm">
+
+        <div class="regular-flex">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Placa</mat-label>
+            <mat-select formControlName="placa" matInput placeholder="PKG-890">
+              <span class="search-input">
+                <input (keyup)="onKey($event,'vehiculos')" matInput>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+              </span>
+              <mat-option *ngFor="let value of selectedVehiculos" [value]="value">{{value.vehiculo_placa}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Arrastre</mat-label>
+            <mat-select formControlName="arrastre" matInput placeholder="CP090">
+              <span class="search-input">
+                <input (keyup)="onKey($event,'arrastres')" matInput>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+              </span>
+              <mat-option *ngFor="let value of selectedArrastres" [value]="value">{{value.trailer_placa}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="info-form">
-            <form class="example-form"  [formGroup]="plannerForm" style="overflow: hidden;">
 
-                <div class="regular-flex">
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Placa</mat-label>
-                        <mat-select formControlName="placa" matInput placeholder="PKG-890">
-                          <span class="search-input">
-                            <input (keyup)="onKey($event,'vehiculos')" matInput>
-                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-                          </span>
-                          <mat-option *ngFor="let value of selectedVehiculos" [value]="value">{{value.vehiculo_placa}}</mat-option>
-                      </mat-select>
-                      </mat-form-field>
-                    
-                      <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Arrastre</mat-label>
-                        <mat-select formControlName="arrastre" matInput placeholder="CP090">
-                          <span class="search-input">
-                            <input (keyup)="onKey($event,'arrastres')" matInput>
-                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-                          </span>
-                          <mat-option *ngFor="let value of selectedArrastres" [value]="value">{{value.trailer_placa}}</mat-option>
-                      </mat-select>
-                      </mat-form-field>
-                </div>
+        <!-- <div class="regular-flex"> -->
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Cliente</mat-label>
+          <mat-select formControlName="cliente" matInput>
+            <span class="search-input">
+              <input (keyup)="onKey($event,'clientes')" matInput>
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+            </span>
+            <mat-option *ngFor="let value of selectedClients" [value]="value">{{value.cliente_nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-                <!-- <div class="regular-flex"> -->
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Cliente</mat-label>
-                        <mat-select formControlName="cliente" matInput>
-                          <span class="search-input">
-                            <input (keyup)="onKey($event,'clientes')" matInput>
-                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-                          </span>
-                          <mat-option *ngFor="let value of selectedClients" [value]="value">{{value.cliente_nombre}}</mat-option>
-                      </mat-select>
-                      </mat-form-field>
-    
-                      <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Ruta</mat-label>
-                        <mat-select formControlName="ruta" matInput  placeholder="Quito-Bogota">
-                          <span class="search-input">
-                            <input (keyup)="onKey($event,'rutas')" (keydown)="$event.stopPropagation()" matInput>
-                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-                          </span>
-                          <mat-option *ngFor="let value of selectedRutas" [value]="value"  [matTooltip]="'Ruta Indicada: ' + value?.ruta_indicacion">
-                            {{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}
-                          </mat-option>
-                      </mat-select>
-                      </mat-form-field>
-                <!-- </div> -->
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Ruta</mat-label>
+          <mat-select formControlName="ruta" matInput placeholder="Quito-Bogota">
+            <span class="search-input">
+              <input (keyup)="onKey($event,'rutas')" (keydown)="$event.stopPropagation()" matInput>
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+            </span>
+            <mat-option *ngFor="let value of selectedRutas" [value]="value"
+              [matTooltip]="'Ruta Indicada: ' + value?.ruta_indicacion">
+              {{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- </div> -->
 
-                <div class="regular-flex">
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Fecha</mat-label>
-                        <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [ngxMatDatetimePicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-                        <ngx-mat-datetime-picker #picker   [touchUi]="false" [enableMeridian]="true"></ngx-mat-datetime-picker>
-                      </mat-form-field>
-    
-                      <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Conductor</mat-label>
-                        <input formControlName="conductor" matInput placeholder="PKG-890">
-                      </mat-form-field>
-                </div>
+        <div class="regular-flex">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [ngxMatDatetimePicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [touchUi]="false" [enableMeridian]="true"></ngx-mat-datetime-picker>
+          </mat-form-field>
 
-                <div class="regular-flex" *ngIf="data.duracion != null && data.fin != null"  >
-                  <mat-form-field class="example-full-width" appearance="fill">
-                      <mat-label>Duracion (Horas)</mat-label>
-                      <input [value]="data.duracion" matInput disabled="true">
-                    </mat-form-field>
-  
-                    <mat-form-field class="example-full-width" appearance="fill">
-                      <mat-label>Fecha (Fin)</mat-label>
-                      <input [value]="data.fin.toLocaleString('en-GB')" matInput disabled="true">
-                    </mat-form-field>
-              </div>
-
-                <button class="example-full-width " style="margin-left: 10px;" mat-raised-button color="primary" [disabled]="!plannerForm.valid" (click)="onClick()">Ingresar</button>
-            </form>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Conductor</mat-label>
+            <mat-select formControlName="conductor" matInput>
+              <span class="search-input">
+                <input (keyup)="onKey($event,'conductores')" (keydown)="$event.stopPropagation()" matInput>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+              </span>
+              <mat-option *ngFor="let value of selectedConductores" [value]="value">{{value.nombre_completo}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-      </div>
-      
-      <div class="normal-side center-flex">
-        <div *ngFor="let a of dataCreated">
-          {{a}}
+
+        <div class="regular-flex" >
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Duracion (Horas)</mat-label>
+            <input [value]="duracion" matInput disabled="true">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha (Fin)</mat-label>
+            <input [value]="fechaFin.toLocaleString('en-GB')" matInput disabled="true">
+          </mat-form-field>
         </div>
-  
-      </div>
-</div>
+
+        <button class="example-full-width " style="margin-left: 10px;" mat-raised-button color="primary"
+          [disabled]="!plannerForm.valid" (click)="onClick()">Agregar</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <div class="normal-side center-flex" style="padding: 2%;"  [ngClass]="{'table-flex': dataCreated.length > 0}">
+    <div>
+      <mat-card >
+        <mat-card-header class="header">Resumen Planificacion
+        </mat-card-header>
+        <mat-card-content >
+
+          <mat-table #tablePlanner #sortPlanner="matSort" [dataSource]="plannerDataCreated" matSort matTableExporter
+            #exporterPlanner="matTableExporter">
+
+            <ng-container matColumnDef="Placa">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
+              <td mat-cell *matCellDef="let element"> {{element?.placa?.vehiculo_placa}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Arrastre">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Arrastre </th>
+              <td mat-cell *matCellDef="let element"> {{element?.arrastre?.trailer_placa}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Cliente">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+              <td mat-cell *matCellDef="let element"> {{element?.cliente?.cliente_nombre}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Ruta">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Ruta </th>
+              <td mat-cell *matCellDef="let element"> {{element?.ruta?.ciudad_origen?.nombre}} - {{
+                element?.ruta?.ciudad_destino?.nombre}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fecha Inicio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Inicio </th>
+              <td mat-cell *matCellDef="let element"> {{element.fecha?.toLocaleString('en-GB')}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Conductor">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Conductor </th>
+              <td mat-cell *matCellDef="let element"> {{element.conductor?.nombre_completo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fecha Fin">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Fin </th>
+              <td mat-cell *matCellDef="let element"> {{element.fin?.toLocaleString('en-GB')}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="plannerColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: plannerColumns;"></tr>
+          </mat-table>
+        </mat-card-content>
+
+        <mat-paginator #paginatorPlanner [pageSizeOptions]="[5, 6,8]" showFirstLastButtons></mat-paginator>
+        <div style="display: flex; justify-content: flex-end;">
+          <button class="down-button" mat-button (click)="exporterPlanner.exportTable('xlsx')" mat-raised-button color="primary"> Descargar Datos</button>
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
