@@ -51,6 +51,7 @@ import { MantenimientoDialogComponent } from './components/dialogs/mantenimiento
 import { GPSDialogComponent } from './components/dialogs/cabezal-dialog/gps-dialog.component';
 import { EnturnamientosDialogComponent } from './components/dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
 import { UserComponent } from './components/user/user.component';
+import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { UserComponent } from './components/user/user.component';
     MantenimientoDialogComponent,
     GPSDialogComponent,
     EnturnamientosDialogComponent,
-    UserComponent
+    UserComponent,
+    MaintenanceComponent
   ],
   imports: [
     BrowserModule,
