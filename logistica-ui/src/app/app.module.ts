@@ -28,6 +28,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatListModule} from '@angular/material/list';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 //spinner
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -52,6 +53,7 @@ import { GPSDialogComponent } from './components/dialogs/cabezal-dialog/gps-dial
 import { EnturnamientosDialogComponent } from './components/dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
 import { UserComponent } from './components/user/user.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
+import { HistoricalComponent } from './components/historical/historical.component';
 
 
 @NgModule({
@@ -67,7 +69,8 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
     GPSDialogComponent,
     EnturnamientosDialogComponent,
     UserComponent,
-    MaintenanceComponent
+    MaintenanceComponent,
+    HistoricalComponent
   ],
   imports: [
     BrowserModule,
@@ -96,6 +99,7 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatListModule,
     MatTooltipModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,

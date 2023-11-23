@@ -6,6 +6,7 @@ import { RestoreComponent } from './components/restore/restore.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
+import { HistoricalComponent } from './components/historical/historical.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch:'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'programacion', component: PlannerComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'user', component: UserComponent},
-  {path: 'mantenimiento', component: MaintenanceComponent}
+  {path: 'mantenimiento', component: MaintenanceComponent},
+  {path: 'historico', component: HistoricalComponent }
 ];
 
 @NgModule({

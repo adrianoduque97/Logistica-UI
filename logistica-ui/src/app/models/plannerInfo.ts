@@ -13,4 +13,5 @@ export class PlannerInfo {
     duracion?: number
     fin?: Date
     estatus?: string
+    dateCreated?: Date
 }

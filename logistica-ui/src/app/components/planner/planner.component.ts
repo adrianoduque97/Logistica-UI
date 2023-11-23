@@ -128,6 +128,7 @@ export class PlannerComponent implements OnInit {
     this.data.fin = addHours(this.data.fecha,duracionViaje);
     this.fechaFin =  this.data.fin;
     this.data.estatus = 'PROGRAMADO'
+    this.data.dateCreated =  new Date();
 
     this.dataCreated.push(this.data);
     this.plannerDataCreated.data = this.dataCreated;    
