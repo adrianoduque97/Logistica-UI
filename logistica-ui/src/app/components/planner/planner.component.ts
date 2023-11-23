@@ -1,18 +1,22 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/cliente';
 import { Conductor } from 'src/app/models/conductor';
+import { estatus } from 'src/app/models/estatus';
 import { PlannerInfo } from 'src/app/models/plannerInfo';
 import { Rutas } from 'src/app/models/rutas';
 import { Trailer } from 'src/app/models/trailer';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavbarService } from 'src/app/services/navbar.service';
+import { SatcontrolService } from 'src/app/services/satcontrol.service';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
+import { DetailsDialogComponent } from '../dialogs/details-dialog/details-dialog.component';
 
 @Component({
   selector: 'app-planner',
@@ -25,7 +29,7 @@ export class PlannerComponent implements OnInit {
   @ViewChild('paginatorPlanner', { static: true }) paginatorPlanner!: MatPaginator;
   @ViewChild('sortPlanner', { static: true }) sortPlanner!: MatSort;
   @ViewChild('filterPlanner', { static: true }) filterPlanner!: ElementRef;
-  plannerColumns = ['Placa', 'Arrastre','Cliente','Ruta','Fecha Inicio', 'Conductor', 'Fecha Fin'];
+  plannerColumns = ['Placa', 'Arrastre','Cliente','Ruta','Fecha Inicio', 'Conductor', 'Fecha Fin', 'Estatus'];
 
   
   plannerForm: FormGroup;
@@ -47,12 +51,18 @@ export class PlannerComponent implements OnInit {
   selectedVehiculos = this.vehiculosList;
   selectedConductores = this.conductoresList;
 
+  //dummy data
+  notAvailableVehiculo = {} as Vehiculo;
+  notAvailabletrailer = {} as Trailer;
+
   duracion = 0;
   fechaFin = new Date();
 
   constructor(public navService: NavbarService, 
               public authService: AuthService, 
               public silogtranService: SilogtranService,
+              public satControlService: SatcontrolService,
+              private dialog: MatDialog,
               public spinner: NgxSpinnerService, ){
 
     this.plannerForm = new FormGroup({
@@ -83,11 +93,15 @@ export class PlannerComponent implements OnInit {
       this.silogtranService.GetTrailers(res.data.token, { estado: '426' }).subscribe(x => {
         this.arrastresList = x.data;
         this.selectedArrastres = this.arrastresList
+        this.notAvailabletrailer.trailer_placa = "POR DEFINIR";
+        this.selectedArrastres.push(this.notAvailabletrailer);
       });
 
       this.silogtranService.GetVehiculos(res.data.token, { estado: '19' }).subscribe(x => {
         this.vehiculosList = x.data;
         this.selectedVehiculos = this.vehiculosList;
+        this.notAvailableVehiculo.vehiculo_placa = "POR DEFINIR";
+        this.selectedVehiculos.push(this.notAvailableVehiculo);
         this.spinner.hide();
       });
 
@@ -113,11 +127,16 @@ export class PlannerComponent implements OnInit {
     this.duracion = duracionViaje;
     this.data.fin = addHours(this.data.fecha,duracionViaje);
     this.fechaFin =  this.data.fin;
+    this.data.estatus = 'PROGRAMADO'
+    this.data.dateCreated =  new Date();
 
     this.dataCreated.push(this.data);
     this.plannerDataCreated.data = this.dataCreated;    
 
     setTimeout( () => this.data = new PlannerInfo(), 2000);
+
+    console.log(this.data);
+    
   }
 
   onKey(event:Event, type:string) { 
@@ -158,6 +177,23 @@ export class PlannerComponent implements OnInit {
           return this.clientList;
         }
       }
+    }
+
+    OpenGPSDialog(placa: string) {
+      this.spinner.show();
+      this.satControlService.GetHistoryByPlate(placa).subscribe(res => {
+        const dialogRef = this.dialog.open(DetailsDialogComponent, {
+          data: {
+            Latitud: res?.latitude ?? 0,
+            Longitud: res?.longitude,
+            Odometro: res?.odometer,
+            Localizacion: res?.location,
+            Altutud: res?.altitud ?? 0
+          }
+        });
+        this.spinner.hide();
+  
+      });
     }
 }
 

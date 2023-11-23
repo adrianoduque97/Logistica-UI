@@ -12,4 +12,6 @@ export class PlannerInfo {
     conductor?: string
     duracion?: number
     fin?: Date
+    estatus?: string
+    dateCreated?: Date
 }
