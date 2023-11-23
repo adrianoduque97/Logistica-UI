@@ -1,0 +1,13 @@
+.mat-table {
+    max-width: 1200px;
+  }
+  
+  .mat-mdc-card-header{
+    background-color: rgb(74, 87, 178)/*rgb(159, 168, 218)*/;
+    color: white;
+    padding: 5px;
+  }
+  .header{
+    justify-content: center;
+    margin-bottom: 3px;
+  }

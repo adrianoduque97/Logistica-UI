@@ -14,7 +14,11 @@
                 <input (keyup)="onKey($event,'vehiculos')" matInput>
                 <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
               </span>
-              <mat-option *ngFor="let value of selectedVehiculos" [value]="value">{{value.vehiculo_placa}}</mat-option>
+              <span class="search-input" style="align-items: center; cursor: pointer;" *ngFor="let value of selectedVehiculos">
+                <mat-option style="width: 75%;" [value]="value">{{value.vehiculo_placa}}</mat-option>
+                <mat-icon aria-hidden="false" aria-label="location icon" fontIcon="location_on" (click)="OpenGPSDialog(value.vehiculo_placa)"></mat-icon>
+              </span>
+
             </mat-select>
           </mat-form-field>
 
@@ -25,7 +29,11 @@
                 <input (keyup)="onKey($event,'arrastres')" matInput>
                 <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
               </span>
-              <mat-option *ngFor="let value of selectedArrastres" [value]="value">{{value.trailer_placa}}</mat-option>
+              <span class="search-input" style="align-items: center; cursor: pointer;" *ngFor="let value of selectedArrastres">
+                <mat-option style="width: 75%;"  [value]="value">{{value.trailer_placa}}
+                </mat-option>
+                <mat-icon aria-hidden="false" aria-label="location icon" fontIcon="location_on" (click)="OpenGPSDialog(value.trailer_placa)"></mat-icon>
+              </span>
             </mat-select>
           </mat-form-field>
         </div>
@@ -142,6 +150,11 @@
             <ng-container matColumnDef="Fecha Fin">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Fin </th>
               <td mat-cell *matCellDef="let element"> {{element.fin?.toLocaleString('en-GB')}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Estatus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+              <td mat-cell *matCellDef="let element"> {{element.estatus}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="plannerColumns"></tr>
