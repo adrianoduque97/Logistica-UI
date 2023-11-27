@@ -29,6 +29,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 //spinner
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -100,6 +101,7 @@ import { HistoricalComponent } from './components/historical/historical.componen
     MatNativeDateModule,
     MatSelectModule,
     MatListModule,
+    MatTabsModule,
     MatTooltipModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,

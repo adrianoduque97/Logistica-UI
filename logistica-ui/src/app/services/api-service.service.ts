@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
+import { PlannerRequest } from '../models/plannerRequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   // Base url
-  baseurl = 'https://localhost:7244';
+  baseurl = 'https://si-logistica-api.azurewebsites.net/';
   constructor(private http: HttpClient) {}
 
   httpOptions = {
@@ -16,9 +17,9 @@ export class ApiService {
     }),
   };
 
-  GetViajes(): Observable<any> {
+  GetPlanner(): Observable<PlannerRequest[][]> {
     return this.http
-      .get<any>(this.baseurl + '/viajes')
+      .get<PlannerRequest[][]>(this.baseurl + '/Planner/GetPlannerHistory')
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
