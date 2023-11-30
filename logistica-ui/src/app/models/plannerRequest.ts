@@ -7,8 +7,11 @@ export class PlannerRequest {
     indicacion?: string
     inicio?: Date
     conductor?: string
-    duracion?: number
+    duracion?: string
     fin?: Date
     estatus?: string
     dateCreated?: Date
+    planId?: string
+    partitionKey?: string
+    rowKey?: string
 }

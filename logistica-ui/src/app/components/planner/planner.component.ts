@@ -17,6 +17,8 @@ import { NavbarService } from 'src/app/services/navbar.service';
 import { SatcontrolService } from 'src/app/services/satcontrol.service';
 import { SilogtranService } from 'src/app/services/silogtran-service.service';
 import { DetailsDialogComponent } from '../dialogs/details-dialog/details-dialog.component';
+import { PlannerRequest } from 'src/app/models/plannerRequest';
+import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-planner',
@@ -36,6 +38,7 @@ export class PlannerComponent implements OnInit {
   data:PlannerInfo = new PlannerInfo();
   dataCreated:Array<PlannerInfo> = new Array;
   plannerDataCreated = new MatTableDataSource<PlannerInfo>();
+  plannerSaveData: PlannerRequest[] = [];
 
   // Data objects
   clientList: Cliente[] = [];
@@ -62,6 +65,7 @@ export class PlannerComponent implements OnInit {
               public authService: AuthService, 
               public silogtranService: SilogtranService,
               public satControlService: SatcontrolService,
+              public apiService: ApiService,
               private dialog: MatDialog,
               public spinner: NgxSpinnerService, ){
 
@@ -131,11 +135,30 @@ export class PlannerComponent implements OnInit {
     this.data.dateCreated =  new Date();
 
     this.dataCreated.push(this.data);
-    this.plannerDataCreated.data = this.dataCreated;    
+    this.plannerDataCreated.data = this.dataCreated;
+
+    let guid;
+    this.plannerSaveData.push({
+      planId: ( guid = crypto.randomUUID()),
+      placa: this.data.placa?.vehiculo_placa,
+      arrastre: this.data.arrastre?.trailer_placa,
+      cliente: this.data.cliente?.cliente_nombre,
+      oigen: this.data.ruta?.ciudad_origen?.nombre,
+      destino: this.data.ruta?.ciudad_destino?.nombre,
+      indicacion: this.data.ruta?.ruta_indicacion,
+      inicio: this.data?.fecha,
+      conductor: this.data.conductor?.nombre_completo,
+      duracion: this.data.duracion.toString(),
+      fin: this.data.fin,
+      estatus: this.data.estatus,
+      dateCreated: new Date(),
+      partitionKey: guid,
+      rowKey: guid
+    });
 
     setTimeout( () => this.data = new PlannerInfo(), 2000);
 
-    console.log(this.data);
+    console.log(this.plannerSaveData);
     
   }
 
@@ -193,6 +216,13 @@ export class PlannerComponent implements OnInit {
         });
         this.spinner.hide();
   
+      });
+    }
+
+    SaveData(){
+      this.apiService.SavePlan(this.plannerSaveData).subscribe( res =>{
+        console.log(res);
+        
       });
     }
 }

@@ -20,7 +20,7 @@ export class HistoricalComponent implements OnInit {
   @ViewChild('paginatorHistorical', { static: true }) paginatorHistorcial!: MatPaginator;
   @ViewChild('sortHistorical', { static: true }) sortHistorical!: MatSort;
   @ViewChild('filterHistorical', { static: true }) filterHistorical!: ElementRef;
-  plannerColumns = ['Placa', 'Arrastre','Cliente','Ruta','Fecha Inicio', 'Conductor', 'Fecha Fin', 'Estatus', 'Editar'];
+  plannerColumns = ['Placa', 'Arrastre','Cliente','Ruta','Fecha Inicio', 'Conductor', 'Fecha Fin', 'Estatus', 'Editar', 'Eliminar'];
 
   data:PlannerRequest[][] = [];
   historicaqlDataSelected = new MatTableDataSource<PlannerRequest>();
@@ -47,6 +47,15 @@ export class HistoricalComponent implements OnInit {
 
   editPlan(plan:PlannerRequest){
     console.log(plan);
+    
+  }
+
+  deletePlan(plan:PlannerRequest){
+    console.log(plan);
+    this.apiService.DeletePlan(plan?.partitionKey??"").subscribe( x=>{
+      console.log(x);
+      
+    });
     
   }
 

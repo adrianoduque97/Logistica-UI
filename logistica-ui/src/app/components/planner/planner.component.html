@@ -165,6 +165,7 @@
         <mat-paginator #paginatorPlanner [pageSizeOptions]="[5, 6,8]" showFirstLastButtons></mat-paginator>
         <div style="display: flex; justify-content: flex-end;">
           <button class="down-button" mat-button (click)="exporterPlanner.exportTable('xlsx')" mat-raised-button color="primary"> Descargar Datos</button>
+          <button class="down-button" mat-button (click)="SaveData()">Save</button>
         </div>
 
       </mat-card>

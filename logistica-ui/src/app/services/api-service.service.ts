@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { PlannerRequest } from '../models/plannerRequest';
@@ -20,6 +20,21 @@ export class ApiService {
   GetPlanner(): Observable<PlannerRequest[][]> {
     return this.http
       .get<PlannerRequest[][]>(this.baseurl + '/Planner/GetPlannerHistory')
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
+  SavePlan(plan: PlannerRequest[]): Observable<string> {
+    return this.http
+      .post<string>(this.baseurl + '/Planner/SavePlan', plan )
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
+  DeletePlan(planId: string): Observable<string> {
+    var params = new HttpParams().set('plan', planId);
+    const options = { params: params}
+    
+    return this.http
+      .delete<string>(this.baseurl + '/Planner/DeletePlan', options)
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
