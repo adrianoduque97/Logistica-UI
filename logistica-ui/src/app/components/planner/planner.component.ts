@@ -220,9 +220,10 @@ export class PlannerComponent implements OnInit {
     }
 
     SaveData(){
+      this.spinner.show();
       this.apiService.SavePlan(this.plannerSaveData).subscribe( res =>{
         console.log(res);
-        
+        this.spinner.hide();
       });
     }
 }

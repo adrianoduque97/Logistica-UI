@@ -52,8 +52,10 @@ export class HistoricalComponent implements OnInit {
 
   deletePlan(plan:PlannerRequest){
     console.log(plan);
+    this.spinner.show();
     this.apiService.DeletePlan(plan?.partitionKey??"").subscribe( x=>{
       console.log(x);
+      this.spinner.hide();
       
     });
     
