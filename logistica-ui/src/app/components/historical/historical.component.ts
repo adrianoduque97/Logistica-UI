@@ -50,14 +50,10 @@ export class HistoricalComponent implements OnInit {
   }
 
   deletePlan(plan:PlannerRequest){
-    console.log(plan);
     this.spinner.show();
     this.apiService.DeletePlan(plan?.partitionKey??"").subscribe( x=>{
       
-      this.historicaqlDataSelected.data.filter( x => x.partitionKey != plan.partitionKey)
-
-      console.log(this.historicaqlDataSelected.data);
-      
+      this.historicaqlDataSelected.data = this.historicaqlDataSelected.data.filter( x => x.partitionKey != plan.partitionKey)
       this.spinner.hide();
       
     });

@@ -157,9 +157,6 @@ export class PlannerComponent implements OnInit {
     });
 
     setTimeout( () => this.data = new PlannerInfo(), 2000);
-
-    console.log(this.plannerSaveData);
-    
   }
 
   onKey(event:Event, type:string) { 
@@ -222,7 +219,6 @@ export class PlannerComponent implements OnInit {
     SaveData(){
       this.spinner.show();
       this.apiService.SavePlan(this.plannerSaveData).subscribe( res =>{
-        console.log(res);
         this.spinner.hide();
       });
     }
