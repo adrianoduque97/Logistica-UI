@@ -8,12 +8,13 @@ import { PlannerRequest } from '../models/plannerRequest';
 })
 export class ApiService {
   // Base url
-  baseurl = 'https://si-logistica-api.azurewebsites.net/';
+  baseurl = 'https://localhost:7244' //'https://si-logistica-api.azurewebsites.net/';
   constructor(private http: HttpClient) {}
 
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin':'*'
     }),
   };
 
@@ -23,18 +24,18 @@ export class ApiService {
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
-  SavePlan(plan: PlannerRequest[]): Observable<string> {
+  SavePlan(plan: PlannerRequest[]): Observable<PlannerRequest> {
     return this.http
-      .post<string>(this.baseurl + '/Planner/SavePlan', plan )
+      .post<PlannerRequest>(this.baseurl + '/Planner/SavePlan',plan )
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
-  DeletePlan(planId: string): Observable<string> {
-    var params = new HttpParams().set('plan', planId);
-    const options = { params: params}
+  DeletePlan(plan: any): Observable<any> {
+    var params = new HttpHeaders().set('plan', plan);
+    const options = { headers: params}
     
     return this.http
-      .delete<string>(this.baseurl + '/Planner/DeletePlan', options)
+      .delete<any>(this.baseurl + '/Planner/DeletePlan', options)
       .pipe(retry(1), catchError(this.errorHandl));
   }
 

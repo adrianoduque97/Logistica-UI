@@ -33,7 +33,6 @@ export class HistoricalComponent implements OnInit {
     this.navService.show();
     this.spinner.show();
     this.apiService.GetPlanner().subscribe( x=> {
-      console.log(x);
       this.parseDates(x)
       this.data = x
       this.spinner.hide();
@@ -54,7 +53,11 @@ export class HistoricalComponent implements OnInit {
     console.log(plan);
     this.spinner.show();
     this.apiService.DeletePlan(plan?.partitionKey??"").subscribe( x=>{
-      console.log(x);
+      
+      this.historicaqlDataSelected.data.filter( x => x.partitionKey != plan.partitionKey)
+
+      console.log(this.historicaqlDataSelected.data);
+      
       this.spinner.hide();
       
     });

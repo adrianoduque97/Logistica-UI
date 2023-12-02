@@ -2,7 +2,7 @@ export class PlannerRequest {
     placa?: string
     arrastre?: string
     cliente?: string
-    oigen?: string
+    origen?: string
     destino?: string
     indicacion?: string
     inicio?: Date

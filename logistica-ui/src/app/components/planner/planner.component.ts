@@ -143,7 +143,7 @@ export class PlannerComponent implements OnInit {
       placa: this.data.placa?.vehiculo_placa,
       arrastre: this.data.arrastre?.trailer_placa,
       cliente: this.data.cliente?.cliente_nombre,
-      oigen: this.data.ruta?.ciudad_origen?.nombre,
+      origen: this.data.ruta?.ciudad_origen?.nombre,
       destino: this.data.ruta?.ciudad_destino?.nombre,
       indicacion: this.data.ruta?.ruta_indicacion,
       inicio: this.data?.fecha,
