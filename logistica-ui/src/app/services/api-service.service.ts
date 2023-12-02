@@ -8,7 +8,7 @@ import { PlannerRequest } from '../models/plannerRequest';
 })
 export class ApiService {
   // Base url
-  baseurl = 'https://localhost:7244' //'https://si-logistica-api.azurewebsites.net/';
+  baseurl = 'https://si-logistica-api.azurewebsites.net/';
   constructor(private http: HttpClient) {}
 
   httpOptions = {
