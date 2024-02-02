@@ -14,6 +14,7 @@ import { SatcontrolService } from 'src/app/services/satcontrol.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { EnturnamientosDialogComponent } from '../dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { ChartType, ScriptLoaderService, getPackageForChart } from 'angular-google-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +28,7 @@ import { AuthService } from 'src/app/services/auth.service';
     ]),
   ]
 })
+
 export class DashboardComponent implements AfterViewInit {
 
   @ViewChild('paginatorTrailer', { static: true }) paginatorTrailer!: MatPaginator;
@@ -45,10 +47,16 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild('sortEnturnamientos', { static: true }) sortEnturnamientos!: MatSort;
   @ViewChild('filterEnturnamientos', { static: true }) filterEnturnamientos!: ElementRef;
 
+  @ViewChild('testGr', { read: ElementRef })
+  private containerEl!: ElementRef<HTMLElement>;
+  
+
   trailerDataSource = new MatTableDataSource<Trailer>();
   matenimientoDataSource = new MatTableDataSource<Vehiculo>();
   VehiculosoDataSource = new MatTableDataSource<Vehiculo>();
   EnturnamientosDataSource = new MatTableDataSource<Vehiculo>();
+
+  
 
 
   constructor(public navService: NavbarService,
@@ -56,7 +64,10 @@ export class DashboardComponent implements AfterViewInit {
     public silogtranService: SilogtranService,
     public satControlService: SatcontrolService,
     public spinner: NgxSpinnerService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private loaderService: ScriptLoaderService) { }
+
+    private readonly pks = getPackageForChart(ChartType.Timeline); 
 
   ngAfterViewInit(): void {
     this.spinner.show()
@@ -84,6 +95,71 @@ export class DashboardComponent implements AfterViewInit {
         this.EnturnamientosDataSource.sort = this.sortEnturnamientos;
         this.spinner.hide();
       });
+    });
+
+    this.loaderService.loadChartPackages(this.pks).subscribe( () => {
+
+    var data = new google.visualization.DataTable();
+    // data.addColumn('string', 'Task ID');
+    // data.addColumn('string', 'Task Name');
+    // data.addColumn('date', 'Start Date');
+    // data.addColumn('date', 'End Date');
+    // data.addColumn('number', 'Duration');
+    // data.addColumn('number', 'Percent Complete');
+    // data.addColumn('string', 'Dependencies');
+    // data.addRows([
+    //   ['Research', 'Find sources',
+    //    new Date(2015, 0, 1,9), new Date(2015, 0, 5,10), null,  100,  null],
+    //   ['Write', 'Write paper',
+    //   new Date(2015, 0, 8), new Date(2015, 0, 9), daysToMilliseconds(3), 25, null],
+    //   ['Cite', 'Create bibliography',
+    //    null, new Date(2015, 0, 7), daysToMilliseconds(1), 20, null],
+    //   ['Complete', 'Hand in paper',
+    //   new Date(2015, 2, 10), new Date(2015, 2, 12), daysToMilliseconds(1), 0, null],
+    //   ['Outline', 'Outline paper',
+    //    null, new Date(2015, 0, 6), daysToMilliseconds(1), 100, null]
+    // ]);
+    var options = {
+      height: 375,
+      width: 600
+    };
+    var data = google.visualization.arrayToDataTable([
+      ['Activity', 'Start Time', 'End Time'],
+      ['Sleep',
+       new Date(2014, 10, 15, 0, 30),
+       new Date(2014, 10, 15, 6, 30)],
+      ['Eat Breakfast',
+       new Date(2014, 10, 15, 6, 45),
+       new Date(2014, 11, 15, 7)],
+      ['Get Ready',
+       new Date(2014, 10, 15, 7, 4),
+       new Date(2014, 10, 15, 7, 30)],
+      ['Commute To Work',
+       new Date(2014, 10, 15, 7, 30),
+       new Date(2014, 10, 15, 8, 30)],
+      ['Work',
+       new Date(2014, 10, 15, 8, 30),
+       new Date(2014, 10, 15, 17)],
+      ['Commute Home',
+       new Date(2014, 10,  15, 17),
+       new Date(2014, 10,  15, 18)],
+      ['Gym',
+       new Date(2014, 10, 15, 18),
+       new Date(2014, 10,  15, 18, 45)],
+      ['Eat Dinner',
+       new Date(2014, 10,  15, 19),
+       new Date(2014, 10,  15, 20)],
+      ['Get Ready For Bed',
+       new Date(2014, 10,  15, 21),
+       new Date(2014, 10,  15, 22)]
+    ]);
+    // var options = {
+    //   height: 450,
+    //   with: 800
+    // };
+      const char = new google.visualization.Timeline(this.containerEl.nativeElement);
+      char.draw(data,options)
+      
     });
   }
 
