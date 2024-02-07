@@ -136,7 +136,7 @@
                     <mat-card-header class="header">ARRASTRES
                     </mat-card-header>
                     <mat-card-content>
-                        <div #testGr id="chart_wrapper">
+                        <div #testGr id="chart_wrapper" style="width: 100%">
 
                         </div>
                     </mat-card-content>
@@ -202,7 +202,15 @@
             <div class="program">
                 <mat-card>
                     <mat-card-content>PROGRAMACION</mat-card-content>
+                    <mat-card-content>
+                        <mat-selection-list [multiple]="false">
+                            <mat-list-option *ngFor="let plan of data" [value]="plan" (click)="selectPlan(plan)">
+                                {{plan[0].dateCreated?.toLocaleDateString('en-GB')}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                      </mat-card-content>
                   </mat-card>
+                
             </div>
         </div>
     </div>

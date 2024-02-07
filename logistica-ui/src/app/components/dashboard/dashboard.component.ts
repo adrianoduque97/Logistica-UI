@@ -15,6 +15,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { EnturnamientosDialogComponent } from '../dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChartType, ScriptLoaderService, getPackageForChart } from 'angular-google-charts';
+import { ApiService } from 'src/app/services/api-service.service';
+import { PlannerRequest } from 'src/app/models/plannerRequest';
 
 @Component({
   selector: 'app-dashboard',
@@ -49,14 +51,17 @@ export class DashboardComponent implements AfterViewInit {
 
   @ViewChild('testGr', { read: ElementRef })
   private containerEl!: ElementRef<HTMLElement>;
-  
+
 
   trailerDataSource = new MatTableDataSource<Trailer>();
   matenimientoDataSource = new MatTableDataSource<Vehiculo>();
   VehiculosoDataSource = new MatTableDataSource<Vehiculo>();
   EnturnamientosDataSource = new MatTableDataSource<Vehiculo>();
 
-  
+  data: PlannerRequest[][] = [];
+  historicaqlDataSelected: PlannerRequest[] = [];
+
+
 
 
   constructor(public navService: NavbarService,
@@ -65,9 +70,10 @@ export class DashboardComponent implements AfterViewInit {
     public satControlService: SatcontrolService,
     public spinner: NgxSpinnerService,
     private dialog: MatDialog,
-    private loaderService: ScriptLoaderService) { }
+    private loaderService: ScriptLoaderService,
+    public apiService: ApiService,) { }
 
-    private readonly pks = getPackageForChart(ChartType.Timeline); 
+  private readonly pks = getPackageForChart(ChartType.Timeline);
 
   ngAfterViewInit(): void {
     this.spinner.show()
@@ -94,79 +100,28 @@ export class DashboardComponent implements AfterViewInit {
         this.EnturnamientosDataSource.paginator = this.paginatorEnturnamientos;
         this.EnturnamientosDataSource.sort = this.sortEnturnamientos;
         this.spinner.hide();
+
+
+        this.apiService.GetPlanner().subscribe(x => {
+          this.parseDates(x)
+          this.data = x
+          this.historicaqlDataSelected = x[0]
+          this.drawTimeline();
+          this.spinner.hide();
+    
+        })
+    
       });
     });
 
-    this.loaderService.loadChartPackages(this.pks).subscribe( () => {
+  
 
-    var data = new google.visualization.DataTable();
-    // data.addColumn('string', 'Task ID');
-    // data.addColumn('string', 'Task Name');
-    // data.addColumn('date', 'Start Date');
-    // data.addColumn('date', 'End Date');
-    // data.addColumn('number', 'Duration');
-    // data.addColumn('number', 'Percent Complete');
-    // data.addColumn('string', 'Dependencies');
-    // data.addRows([
-    //   ['Research', 'Find sources',
-    //    new Date(2015, 0, 1,9), new Date(2015, 0, 5,10), null,  100,  null],
-    //   ['Write', 'Write paper',
-    //   new Date(2015, 0, 8), new Date(2015, 0, 9), daysToMilliseconds(3), 25, null],
-    //   ['Cite', 'Create bibliography',
-    //    null, new Date(2015, 0, 7), daysToMilliseconds(1), 20, null],
-    //   ['Complete', 'Hand in paper',
-    //   new Date(2015, 2, 10), new Date(2015, 2, 12), daysToMilliseconds(1), 0, null],
-    //   ['Outline', 'Outline paper',
-    //    null, new Date(2015, 0, 6), daysToMilliseconds(1), 100, null]
-    // ]);
-    var options = {
-      height: 375,
-      width: 600
-    };
-    var data = google.visualization.arrayToDataTable([
-      ['Activity', 'Start Time', 'End Time'],
-      ['Sleep',
-       new Date(2014, 10, 15, 0, 30),
-       new Date(2014, 10, 15, 6, 30)],
-      ['Eat Breakfast',
-       new Date(2014, 10, 15, 6, 45),
-       new Date(2014, 11, 15, 7)],
-      ['Get Ready',
-       new Date(2014, 10, 15, 7, 4),
-       new Date(2014, 10, 15, 7, 30)],
-      ['Commute To Work',
-       new Date(2014, 10, 15, 7, 30),
-       new Date(2014, 10, 15, 8, 30)],
-      ['Work',
-       new Date(2014, 10, 15, 8, 30),
-       new Date(2014, 10, 15, 17)],
-      ['Commute Home',
-       new Date(2014, 10,  15, 17),
-       new Date(2014, 10,  15, 18)],
-      ['Gym',
-       new Date(2014, 10, 15, 18),
-       new Date(2014, 10,  15, 18, 45)],
-      ['Eat Dinner',
-       new Date(2014, 10,  15, 19),
-       new Date(2014, 10,  15, 20)],
-      ['Get Ready For Bed',
-       new Date(2014, 10,  15, 21),
-       new Date(2014, 10,  15, 22)]
-    ]);
-    // var options = {
-    //   height: 450,
-    //   with: 800
-    // };
-      const char = new google.visualization.Timeline(this.containerEl.nativeElement);
-      char.draw(data,options)
-      
-    });
   }
 
   trailersColumns = ['trailer_placa', 'tipo_equipo', 'tipo_trailer', 'trailer_modelo', 'estado', 'detalles'];
   mantenimientosColumns = ['placa', 'vigencia_revision', 'detalles'];
   vehiculosColumns = ['placa', 'tipo', 'modelo', 'capacidad', 'ejes', 'detalles']
-  enturnamientosColumns = ['placa','poseedor', 'detalles'];
+  enturnamientosColumns = ['placa', 'poseedor', 'detalles'];
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -247,15 +202,67 @@ export class DashboardComponent implements AfterViewInit {
     var endDate = new Date();
     var startDate = new Date();
     startDate.setDate(endDate.getDate() - 7);
-    this.satControlService.GetZonesByPlateAndDate(vehiculo.vehiculo_placa, startDate, endDate).subscribe(res =>{
-      const dialogRef = this.dialog.open(EnturnamientosDialogComponent,{
-        data:{
+    this.satControlService.GetZonesByPlateAndDate(vehiculo.vehiculo_placa, startDate, endDate).subscribe(res => {
+      const dialogRef = this.dialog.open(EnturnamientosDialogComponent, {
+        data: {
           zones: res
         }
       });
-    
-      this.spinner.hide();      
+
+      this.spinner.hide();
     });
   }
+
+  parseDates(data: PlannerRequest[][]) {
+    data.forEach(obj => {
+      obj.forEach(p => {
+        p.dateCreated = new Date(p.dateCreated ?? "")
+        p.inicio = new Date(p.inicio ?? "")
+        p.fin = new Date(p.fin ?? "")
+      })
+    })
+  }
+
+  drawTimeline(){
+    this.loaderService.loadChartPackages(this.pks).subscribe(() => {
+
+      // var dateL = new Date(this.historicaqlDataSelected.map(e =>  e.fin).sort().reverse()[0]??"")
+      // console.log(dateL);
+      
+      var options = {
+      
+        height: 375,
+        timeline: { colorByRowLabel: true },
+        alternatingRowStyle: false,
+        hAxis:{
+          // format: 'HH:mm',
+          // maxValue: dateL.setDate(dateL.getDate()+1)
+        }
+      };
+      var dataCreated: (string | Date | undefined)[][] =  []
+      this.historicaqlDataSelected.forEach( x=> {
+        dataCreated.push([x.placa,x.destino,x.inicio,x.fin])
+      });
+
+      console.log(dataCreated);
+      dataCreated.unshift(['Activity', 'Destino' ,'Start Time', 'End Time'])
+
+      
+      var data = google.visualization.arrayToDataTable(dataCreated,false);
+      const char = new google.visualization.Timeline(this.containerEl.nativeElement);
+      char.draw(data, options)
+    });
+
+  }
+
+  selectPlan(plan:PlannerRequest[]){
+    var o = this.historicaqlDataSelected.map(e =>  e.fin).sort().reverse()[0]
+    console.log(o);
+    
+    this.historicaqlDataSelected = this.data.flat().filter(x => (x.fin?.getFullYear() ??0)> 2023 );
+    this.drawTimeline();
+  }
+
+  
 
 }
