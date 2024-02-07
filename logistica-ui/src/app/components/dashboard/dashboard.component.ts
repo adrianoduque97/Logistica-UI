@@ -17,6 +17,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChartType, ScriptLoaderService, getPackageForChart } from 'angular-google-charts';
 import { ApiService } from 'src/app/services/api-service.service';
 import { PlannerRequest } from 'src/app/models/plannerRequest';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-dashboard',
@@ -57,9 +59,14 @@ export class DashboardComponent implements AfterViewInit {
   matenimientoDataSource = new MatTableDataSource<Vehiculo>();
   VehiculosoDataSource = new MatTableDataSource<Vehiculo>();
   EnturnamientosDataSource = new MatTableDataSource<Vehiculo>();
-
-  data: PlannerRequest[][] = [];
   historicaqlDataSelected: PlannerRequest[] = [];
+
+  today =  new Date();
+  lastWeek = new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate()-7);
+  range = new FormGroup({
+    start: new FormControl<Date | null>(this.lastWeek),
+    end: new FormControl<Date | null>(this.today),
+  });
 
 
 
@@ -102,10 +109,9 @@ export class DashboardComponent implements AfterViewInit {
         this.spinner.hide();
 
 
-        this.apiService.GetPlanner().subscribe(x => {
+        this.apiService.GetPlannerByDateRange(this.lastWeek,this.today).subscribe(x => {
           this.parseDates(x)
-          this.data = x
-          this.historicaqlDataSelected = x[0]
+          this.historicaqlDataSelected = x
           this.drawTimeline();
           this.spinner.hide();
     
@@ -213,14 +219,14 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
-  parseDates(data: PlannerRequest[][]) {
-    data.forEach(obj => {
-      obj.forEach(p => {
+  parseDates(data: PlannerRequest[]) {
+    // data.forEach(obj => {
+      data.forEach(p => {
         p.dateCreated = new Date(p.dateCreated ?? "")
         p.inicio = new Date(p.inicio ?? "")
         p.fin = new Date(p.fin ?? "")
       })
-    })
+    // })
   }
 
   drawTimeline(){
@@ -245,24 +251,27 @@ export class DashboardComponent implements AfterViewInit {
       });
 
       console.log(dataCreated);
-      dataCreated.unshift(['Activity', 'Destino' ,'Start Time', 'End Time'])
+      //dataCreated.unshift(['Activity', 'Destino' ,'Start Time', 'End Time'])
 
       
-      var data = google.visualization.arrayToDataTable(dataCreated,false);
+      var data = google.visualization.arrayToDataTable(dataCreated,true);
       const char = new google.visualization.Timeline(this.containerEl.nativeElement);
       char.draw(data, options)
     });
+  }  
 
+  changeDate(startDate: any, endDate: any){
+    if(startDate.value && endDate.value)
+    {
+      this.spinner.show()
+      this.apiService.GetPlannerByDateRange(this.range.value.start ?? new Date(), this.range.value.end ?? new Date()).subscribe(x => {
+      this.parseDates(x)
+      this.historicaqlDataSelected = x
+      this.drawTimeline();
+      this.spinner.hide();
+
+    })
   }
-
-  selectPlan(plan:PlannerRequest[]){
-    var o = this.historicaqlDataSelected.map(e =>  e.fin).sort().reverse()[0]
-    console.log(o);
-    
-    this.historicaqlDataSelected = this.data.flat().filter(x => (x.fin?.getFullYear() ??0)> 2023 );
-    this.drawTimeline();
   }
-
-  
 
 }

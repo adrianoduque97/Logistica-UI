@@ -24,6 +24,16 @@ export class ApiService {
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
+  GetPlannerByDateRange(startDate: string|Date, endDate: string|Date): Observable<PlannerRequest[]> {
+
+    var params = new HttpParams().set('StartDate', startDate.toLocaleString()).append('EndDate', endDate.toLocaleString());
+    const options = { params: params}
+
+    return this.http
+      .get<PlannerRequest[]>(this.baseurl + '/Planner/GetPlannerHistoryByDateRange',options)
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
   SavePlan(plan: PlannerRequest[]): Observable<PlannerRequest> {
     return this.http
       .post<PlannerRequest>(this.baseurl + '/Planner/SavePlan',plan )
