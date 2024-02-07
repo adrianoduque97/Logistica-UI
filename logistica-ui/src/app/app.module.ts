@@ -45,7 +45,7 @@ import { environment } from '../enviroments/enviroment';
 import { PlannerComponent } from './components/planner/planner.component';
 import { AuthService } from './services/auth.service';
 
-// import { GoogleChartsModule } from 'angular-google-charts';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { NavbarService } from './services/navbar.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DetailsDialogComponent } from './components/dialogs/details-dialog/details-dialog.component';
@@ -55,6 +55,7 @@ import { EnturnamientosDialogComponent } from './components/dialogs/enturnamient
 import { UserComponent } from './components/user/user.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { HistoricalComponent } from './components/historical/historical.component';
+
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { HistoricalComponent } from './components/historical/historical.componen
     MatTooltipModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    GoogleChartsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, AuthService, NavbarService,  { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],

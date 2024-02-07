@@ -14,6 +14,11 @@ import { SatcontrolService } from 'src/app/services/satcontrol.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { EnturnamientosDialogComponent } from '../dialogs/enturnamientos-dialog/enturnamientos-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { ChartType, ScriptLoaderService, getPackageForChart } from 'angular-google-charts';
+import { ApiService } from 'src/app/services/api-service.service';
+import { PlannerRequest } from 'src/app/models/plannerRequest';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +32,7 @@ import { AuthService } from 'src/app/services/auth.service';
     ]),
   ]
 })
+
 export class DashboardComponent implements AfterViewInit {
 
   @ViewChild('paginatorTrailer', { static: true }) paginatorTrailer!: MatPaginator;
@@ -45,10 +51,24 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild('sortEnturnamientos', { static: true }) sortEnturnamientos!: MatSort;
   @ViewChild('filterEnturnamientos', { static: true }) filterEnturnamientos!: ElementRef;
 
+  @ViewChild('testGr', { read: ElementRef })
+  private containerEl!: ElementRef<HTMLElement>;
+
+
   trailerDataSource = new MatTableDataSource<Trailer>();
   matenimientoDataSource = new MatTableDataSource<Vehiculo>();
   VehiculosoDataSource = new MatTableDataSource<Vehiculo>();
   EnturnamientosDataSource = new MatTableDataSource<Vehiculo>();
+  historicaqlDataSelected: PlannerRequest[] = [];
+
+  today =  new Date();
+  lastWeek = new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate()-7);
+  range = new FormGroup({
+    start: new FormControl<Date | null>(this.lastWeek),
+    end: new FormControl<Date | null>(this.today),
+  });
+
+
 
 
   constructor(public navService: NavbarService,
@@ -56,7 +76,11 @@ export class DashboardComponent implements AfterViewInit {
     public silogtranService: SilogtranService,
     public satControlService: SatcontrolService,
     public spinner: NgxSpinnerService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private loaderService: ScriptLoaderService,
+    public apiService: ApiService,) { }
+
+  private readonly pks = getPackageForChart(ChartType.Timeline);
 
   ngAfterViewInit(): void {
     this.spinner.show()
@@ -83,14 +107,27 @@ export class DashboardComponent implements AfterViewInit {
         this.EnturnamientosDataSource.paginator = this.paginatorEnturnamientos;
         this.EnturnamientosDataSource.sort = this.sortEnturnamientos;
         this.spinner.hide();
+
+
+        this.apiService.GetPlannerByDateRange(this.lastWeek,this.today).subscribe(x => {
+          this.parseDates(x)
+          this.historicaqlDataSelected = x
+          this.drawTimeline();
+          this.spinner.hide();
+    
+        })
+    
       });
     });
+
+  
+
   }
 
   trailersColumns = ['trailer_placa', 'tipo_equipo', 'tipo_trailer', 'trailer_modelo', 'estado', 'detalles'];
   mantenimientosColumns = ['placa', 'vigencia_revision', 'detalles'];
   vehiculosColumns = ['placa', 'tipo', 'modelo', 'capacidad', 'ejes', 'detalles']
-  enturnamientosColumns = ['placa','poseedor', 'detalles'];
+  enturnamientosColumns = ['placa', 'poseedor', 'detalles'];
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -171,15 +208,70 @@ export class DashboardComponent implements AfterViewInit {
     var endDate = new Date();
     var startDate = new Date();
     startDate.setDate(endDate.getDate() - 7);
-    this.satControlService.GetZonesByPlateAndDate(vehiculo.vehiculo_placa, startDate, endDate).subscribe(res =>{
-      const dialogRef = this.dialog.open(EnturnamientosDialogComponent,{
-        data:{
+    this.satControlService.GetZonesByPlateAndDate(vehiculo.vehiculo_placa, startDate, endDate).subscribe(res => {
+      const dialogRef = this.dialog.open(EnturnamientosDialogComponent, {
+        data: {
           zones: res
         }
       });
-    
-      this.spinner.hide();      
+
+      this.spinner.hide();
     });
+  }
+
+  parseDates(data: PlannerRequest[]) {
+    // data.forEach(obj => {
+      data.forEach(p => {
+        p.dateCreated = new Date(p.dateCreated ?? "")
+        p.inicio = new Date(p.inicio ?? "")
+        p.fin = new Date(p.fin ?? "")
+      })
+    // })
+  }
+
+  drawTimeline(){
+    this.loaderService.loadChartPackages(this.pks).subscribe(() => {
+
+      // var dateL = new Date(this.historicaqlDataSelected.map(e =>  e.fin).sort().reverse()[0]??"")
+      // console.log(dateL);
+      
+      var options = {
+      
+        height: 375,
+        timeline: { colorByRowLabel: true },
+        alternatingRowStyle: false,
+        hAxis:{
+          // format: 'HH:mm',
+          // maxValue: dateL.setDate(dateL.getDate()+1)
+        }
+      };
+      var dataCreated: (string | Date | undefined)[][] =  []
+      this.historicaqlDataSelected.forEach( x=> {
+        dataCreated.push([x.placa,x.destino,x.inicio,x.fin])
+      });
+
+      console.log(dataCreated);
+      //dataCreated.unshift(['Activity', 'Destino' ,'Start Time', 'End Time'])
+
+      
+      var data = google.visualization.arrayToDataTable(dataCreated,true);
+      const char = new google.visualization.Timeline(this.containerEl.nativeElement);
+      char.draw(data, options)
+    });
+  }  
+
+  changeDate(startDate: any, endDate: any){
+    if(startDate.value && endDate.value)
+    {
+      this.spinner.show()
+      this.apiService.GetPlannerByDateRange(this.range.value.start ?? new Date(), this.range.value.end ?? new Date()).subscribe(x => {
+      this.parseDates(x)
+      this.historicaqlDataSelected = x
+      this.drawTimeline();
+      this.spinner.hide();
+
+    })
+  }
   }
 
 }

@@ -36,11 +36,13 @@
   }
 
   .mat-mdc-card-header{
-    background-color: rgb(159, 168, 218);
+    background-color: rgb(74, 87, 178);
     padding: 5px;
+    color: white;
   }
   .down-button{
-    background-color: rgb(159, 168, 218);
+    background-color: rgb(74, 87, 178);
+    color: white;
     padding: 5px;
     margin: 2px;
   }
@@ -68,6 +70,12 @@
 
 .mat-row {
     width: 100%;
+}
+
+#chart_wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  /* width: 800px; */
 }
 
 /* MEDIA QUERIES */

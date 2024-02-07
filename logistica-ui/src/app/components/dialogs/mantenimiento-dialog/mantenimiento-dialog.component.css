@@ -7,11 +7,13 @@ table td, table th {
   }
 
   .mat-mdc-card-header{
-    background-color: rgb(159, 168, 218);
+    background-color: rgb(74, 87, 178);
+    color: white;
     padding: 5px;
   }
   .down-button{
-    background-color: rgb(159, 168, 218);
+    background-color: rgb(74, 87, 178);
+    color: white;
     padding: 5px;
     margin: 2px;
   }
