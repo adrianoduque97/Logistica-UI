@@ -93,4 +93,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     overflow-y: auto;
     scrollbar-width: thin;
 }
+.title{
+  padding-top: 20px;
+}
   }

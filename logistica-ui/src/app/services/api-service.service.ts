@@ -8,7 +8,7 @@ import { PlannerRequest } from '../models/plannerRequest';
 })
 export class ApiService {
   // Base url
-  baseurl = 'https://si-logistica-api.azurewebsites.net/';
+  baseurl = 'https://localhost:7244'//'https://si-logistica-api.azurewebsites.net/';
   constructor(private http: HttpClient) {}
 
   httpOptions = {
@@ -18,9 +18,9 @@ export class ApiService {
     }),
   };
 
-  GetPlanner(): Observable<PlannerRequest[][]> {
+  GetPlanner(): Observable<PlannerRequest[]> {
     return this.http
-      .get<PlannerRequest[][]>(this.baseurl + '/Planner/GetPlannerHistory')
+      .get<PlannerRequest[]>(this.baseurl + '/Planner/GetPlannerHistory')
       .pipe(retry(1), catchError(this.errorHandl));
   }
 

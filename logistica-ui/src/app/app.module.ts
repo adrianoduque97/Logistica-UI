@@ -55,6 +55,7 @@ import { EnturnamientosDialogComponent } from './components/dialogs/enturnamient
 import { UserComponent } from './components/user/user.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { HistoricalComponent } from './components/historical/historical.component';
+import { GroupDataComponent } from './components/group-data/group-data.component';
 
 
 
@@ -72,7 +73,8 @@ import { HistoricalComponent } from './components/historical/historical.componen
     EnturnamientosDialogComponent,
     UserComponent,
     MaintenanceComponent,
-    HistoricalComponent
+    HistoricalComponent,
+    GroupDataComponent
   ],
   imports: [
     BrowserModule,

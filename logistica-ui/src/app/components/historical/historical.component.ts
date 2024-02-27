@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,8 +22,16 @@ export class HistoricalComponent implements OnInit {
   @ViewChild('filterHistorical', { static: true }) filterHistorical!: ElementRef;
   plannerColumns = ['Placa', 'Arrastre','Cliente','Ruta','Fecha Inicio', 'Conductor', 'Fecha Fin', 'Estatus', 'Editar', 'Eliminar'];
 
-  data:PlannerRequest[][] = [];
+  data:PlannerRequest[] = [];
   historicaqlDataSelected = new MatTableDataSource<PlannerRequest>();
+
+  today =  new Date();
+  lastWeek = new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate()-7);
+  range = new FormGroup({
+    start: new FormControl<Date | null>(this.lastWeek),
+    end: new FormControl<Date | null>(this.today),
+  });
+
 
   constructor(public navService: NavbarService,
               public apiService: ApiService,
@@ -32,16 +40,12 @@ export class HistoricalComponent implements OnInit {
   ngOnInit(): void {
     this.navService.show();
     this.spinner.show();
-    this.apiService.GetPlanner().subscribe( x=> {
+    this.apiService.GetPlannerByDateRange(this.lastWeek,this.today).subscribe( x=> {
       this.parseDates(x)
-      this.data = x
+      this.historicaqlDataSelected.data = x
       this.spinner.hide();
-      
-    })
-  }
-
-  selectPlan(plan:PlannerRequest[]){
-    this.historicaqlDataSelected.data = plan;
+    });
+    this.historicaqlDataSelected.paginator = this.paginatorHistorcial;
   }
 
   editPlan(plan:PlannerRequest){
@@ -60,14 +64,26 @@ export class HistoricalComponent implements OnInit {
     
   }
 
-  parseDates(data:PlannerRequest[][]){
+  parseDates(data:PlannerRequest[]){
     data.forEach(obj =>{
-      obj.forEach(p => {
-        p.dateCreated = new Date(p.dateCreated??"")
-        p.inicio =  new Date(p.inicio??"")
-        p.fin = new Date(p.fin??"")
-      })
+        obj.dateCreated = new Date(obj.dateCreated??"")
+        obj.inicio =  new Date(obj.inicio??"")
+        obj.fin = new Date(obj.fin??"")
     })
+  }
+
+  changeDate(startDate: any, endDate: any){
+    if(startDate.value && endDate.value)
+    {
+      this.spinner.show()
+      this.apiService.GetPlannerByDateRange(this.range.value.start ?? new Date(), this.range.value.end ?? new Date()).subscribe(x => {
+      this.parseDates(x)
+      console.log(x);
+      this.historicaqlDataSelected.data = x
+      this.spinner.hide();
+
+    })
+  }
   }
 }
 

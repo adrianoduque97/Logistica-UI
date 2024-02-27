@@ -1,19 +1,22 @@
 <div class="centered main-card">
-    <div class="normal-side center-flex" style="flex-direction:column; width: 30%;">
+    <div class="normal-side center-flex" style="flex-direction:column; width: 30%; height: 45%;">
         <div class="title">
             Histórico
           </div>
         <div>
-            <mat-selection-list [multiple]="false">
-                <mat-list-option *ngFor="let plan of data" [value]="plan" (click)="selectPlan(plan)">
-                    {{plan[0].dateCreated?.toLocaleDateString('en-GB')}}
-                </mat-list-option>
-            </mat-selection-list>
+          <mat-form-field style="width: 100%;">
+            <mat-label>Ingresa fecha para buscar planificaciones</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
+                <input matStartDate formControlName="start" placeholder="Start date" #dateRangeStart>
+                <input matEndDate formControlName="end" placeholder="End date" #dateRangeEnd (dateChange)="changeDate(dateRangeStart,dateRangeEnd)">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
         </div>
     </div>
 
     <div class="normal-side center-flex" style="padding: 2%; width: auto;">
-        <div>
             <mat-card >
               <mat-card-header class="header"> Historico Planificacion
               </mat-card-header>
@@ -82,12 +85,11 @@
                 </mat-table>
               </mat-card-content>
       
-              <mat-paginator #paginatorHistorical [pageSizeOptions]="[5, 6,8]" showFirstLastButtons></mat-paginator>
+              <mat-paginator #paginatorHistorical [pageSizeOptions]="[4, 8,10]" showFirstLastButtons></mat-paginator>
               <div style="display: flex; justify-content: flex-end;">
                 <button class="down-button" mat-button (click)="exporterHistorical.exportTable('xlsx')" mat-raised-button color="primary"> Descargar Datos</button>
               </div>
       
             </mat-card>
-          </div>
     </div>
 </div>
