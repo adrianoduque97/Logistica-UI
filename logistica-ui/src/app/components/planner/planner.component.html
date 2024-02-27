@@ -6,6 +6,51 @@
     <div class="info-form">
       <form class="example-form" [formGroup]="plannerForm">
 
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Ruta</mat-label>
+          <mat-select formControlName="ruta" matInput placeholder="Quito-Bogota">
+            <span class="search-input">
+              <input (keyup)="onKey($event,'rutas')" (keydown)="$event.stopPropagation()" matInput>
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+            </span>
+            <mat-option *ngFor="let value of selectedRutas" [value]="value"
+              [matTooltip]="'Ruta Indicada: ' + value?.ruta_indicacion">
+              {{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Cliente</mat-label>
+          <mat-select formControlName="cliente" matInput>
+            <span class="search-input">
+              <input (keyup)="onKey($event,'clientes')" matInput>
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+            </span>
+            <mat-option *ngFor="let value of selectedClients" [value]="value">{{value.cliente_nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="regular-flex">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [ngxMatDatetimePicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker [touchUi]="false" [enableMeridian]="true"></ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Conductor</mat-label>
+            <mat-select formControlName="conductor" matInput>
+              <span class="search-input">
+                <input (keyup)="onKey($event,'conductores')" (keydown)="$event.stopPropagation()" matInput>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+              </span>
+              <mat-option *ngFor="let value of selectedConductores" [value]="value">{{value.nombre_completo}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="regular-flex">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Placa</mat-label>
@@ -34,53 +79,6 @@
                 </mat-option>
                 <mat-icon aria-hidden="false" aria-label="location icon" fontIcon="location_on" (click)="OpenGPSDialog(value.trailer_placa)"></mat-icon>
               </span>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <!-- <div class="regular-flex"> -->
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Cliente</mat-label>
-          <mat-select formControlName="cliente" matInput>
-            <span class="search-input">
-              <input (keyup)="onKey($event,'clientes')" matInput>
-              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-            </span>
-            <mat-option *ngFor="let value of selectedClients" [value]="value">{{value.cliente_nombre}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Ruta</mat-label>
-          <mat-select formControlName="ruta" matInput placeholder="Quito-Bogota">
-            <span class="search-input">
-              <input (keyup)="onKey($event,'rutas')" (keydown)="$event.stopPropagation()" matInput>
-              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-            </span>
-            <mat-option *ngFor="let value of selectedRutas" [value]="value"
-              [matTooltip]="'Ruta Indicada: ' + value?.ruta_indicacion">
-              {{value?.ciudad_origen?.nombre}} - {{ value?.ciudad_destino?.nombre}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <!-- </div> -->
-
-        <div class="regular-flex">
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Fecha</mat-label>
-            <input placeholder="dd/mm/AAAA" formControlName="fecha" matInput [ngxMatDatetimePicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-            <ngx-mat-datetime-picker #picker [touchUi]="false" [enableMeridian]="true"></ngx-mat-datetime-picker>
-          </mat-form-field>
-
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Conductor</mat-label>
-            <mat-select formControlName="conductor" matInput>
-              <span class="search-input">
-                <input (keyup)="onKey($event,'conductores')" (keydown)="$event.stopPropagation()" matInput>
-                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
-              </span>
-              <mat-option *ngFor="let value of selectedConductores" [value]="value">{{value.nombre_completo}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

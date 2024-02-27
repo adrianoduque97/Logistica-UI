@@ -231,9 +231,6 @@ export class DashboardComponent implements AfterViewInit {
 
   drawTimeline(){
     this.loaderService.loadChartPackages(this.pks).subscribe(() => {
-
-      // var dateL = new Date(this.historicaqlDataSelected.map(e =>  e.fin).sort().reverse()[0]??"")
-      // console.log(dateL);
       
       var options = {
       
@@ -250,10 +247,7 @@ export class DashboardComponent implements AfterViewInit {
         dataCreated.push([x.placa,x.destino,x.inicio,x.fin])
       });
 
-      console.log(dataCreated);
-      //dataCreated.unshift(['Activity', 'Destino' ,'Start Time', 'End Time'])
-
-      
+      if (dataCreated.length == 0) dataCreated.push(['SIN DATOS','NO DATA',new Date(),new Date()]);
       var data = google.visualization.arrayToDataTable(dataCreated,true);
       const char = new google.visualization.Timeline(this.containerEl.nativeElement);
       char.draw(data, options)
